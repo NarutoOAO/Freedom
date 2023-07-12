@@ -1,0 +1,31 @@
+.navigation_teacher {
+  position: fixed;
+  height: 100%;
+  width: 10%;
+  background-color: #f1f1f1;
+}
+
+.navigation_teacher ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navigation_teacher li {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.navigation_teacher li:hover {
+  background-color: #eaeaea;
+  cursor: pointer;
+}
+
+.courseLabel{
+  background-color: rgb(247, 198, 49);
+
+  font-size: large;
+  text-align: center;
+  font-weight: bold;
+  pointer-events: none;
+}

@@ -1,0 +1,53 @@
+.profile-container {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.avatar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-style: double;
+  padding: 20px;
+  font-size: 15px!important;
+  border-width: 0.7ch;
+}
+
+.custom-file-upload {
+  display: inline-block;
+  width: 80%;
+  padding: 10px;
+  cursor: pointer;
+  border-style: solid;
+  border-color: rgb(114, 185, 7);
+  text-align: center;
+}
+
+.custom-file-upload input[type="file"] {
+  display: none;
+}
+
+.profileAvatar {
+  width: 200px; /* Adjust the width of the avatar as needed */
+}
+
+.profile-container div {
+  margin-top: 20px;
+  font-size: 20px;
+}
+
+.profile-container div span {
+  font-weight: bold;
+}
+
+.profileBtnGroup {
+  display: flex;
+  gap: 10px; /* Add some space between the buttons */
+}
+
+.profileBtnGroup > * {
+  flex-grow: 1;
+}
+

@@ -1,0 +1,77 @@
+package router
+
+import (
+	api "9900project/api/v1"
+	"9900project/middleware"
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+)
+
+func NewRouter() *gin.Engine {
+	r := gin.Default()
+	r.Use(middleware.Cors())
+	r.StaticFS("/static", http.Dir("./static"))
+	v1 := r.Group("api/v1")
+	{
+		v1.GET("ping", func(c *gin.Context) {
+			c.JSON(http.StatusOK, gin.H{"msg": "pong"})
+		})
+
+		v1.POST("user/register", api.UserRegister)
+		v1.POST("user/login", api.UserLogin)
+
+		authed := v1.Group("/")
+		authed.Use(middleware.JWT())
+		{
+			//user function
+			authed.PUT("user", api.UpdateUser)
+			authed.POST("user/avatar", api.UploadAvatar)
+			authed.POST("user/password", api.ChangePassword)
+			//authed.POST("user/sending-email", api.SendEmail)
+			//authed.POST("user/valid-email", api.ValidEmail)
+
+			//forum function
+			authed.POST("forum", api.CreateForum)
+			authed.GET("forum/:course_number", api.ShowForumList)
+			//post function
+			authed.POST("post", api.CreatePost)
+			//authed.GET("post", api.GetPost2)
+			//authed.POST("post_vote", api.PostVote)
+			authed.GET("post/:id", api.GetPostByForumId)
+			authed.GET("posts/:course", api.GetPostByCourseNumber)
+			authed.GET("post_information/:id", api.GetPostInformationByForumId)
+			authed.POST("post_search/:course", api.SearchPostByInfo)
+			//comment function
+			authed.POST("comment", api.CreateComment)
+			authed.GET("comment/:id", api.GetCommentByPostId)
+
+			//show and enroll course
+			authed.POST("teacher-course", api.CreateCourse)
+			authed.GET("course", api.GetCoursesById)
+			authed.POST("student-course", api.SelectCourse)
+			authed.GET("student-course", api.GetCoursesSelectById)
+
+			//course material
+			authed.POST("material", api.CreateMaterial)
+			authed.GET("material/:course_number/:file_category", api.ShowMaterial)
+			authed.PUT("material", api.UpdateMaterial)
+			authed.DELETE("material", api.DeleteMaterial)
+			authed.POST("material/:course_number", api.SearchMaterialByInfo)
+
+			//assignment
+			authed.POST("assignment", api.CreateAssignment)
+			authed.PUT("assignment", api.UpdateAssignment)
+			authed.GET("assignment/:course_number", api.ShowAssignment)
+			authed.DELETE("assignment", api.DeleteAssignment)
+
+			//assignment solution and grade
+			authed.POST("assignment_solution", api.CreateAssMark)
+			authed.DELETE("assignment_solution", api.DeleteAssMark)
+			authed.GET("assignment_solution/:course_number/:assignment_id", api.ShowAssMark)
+			authed.GET("assignment_solution/:course_number", api.ShowAssMarkForStudent)
+			authed.PUT("assignment_grade", api.UpdateAssMark)
+		}
+	}
+	return r
+}

@@ -1,0 +1,13 @@
+.scrollable-content {
+  height: 800px; 
+  overflow-y: auto; 
+}
+
+.scrollable-answers {
+  height: 400px; 
+  overflow-y: auto; 
+}
+
+  .css-sghohy-MuiButtonBase-root-MuiButton-root {
+    height: 40px; 
+  }
