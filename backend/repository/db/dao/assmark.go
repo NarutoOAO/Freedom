@@ -39,6 +39,11 @@ func (dao *AssMarkDao) GetAssMarkByCourseNumber(courseNumber int, aId uint) (ass
 	return
 }
 
+func (dao *AssMarkDao) GetAssMarkByCourseNumber1(courseNumber int, aId uint, sId uint) (assMark *model.AssMark, err error) {
+	err = dao.DB.Model(&model.AssMark{}).Where("course_number=? and assignment_id=? and student_id=?", courseNumber, aId, sId).First(&assMark).Error
+	return
+}
+
 func (dao *AssMarkDao) GetAssMarkByAssId(uId uint, aId uint) (count int64, err error) {
 	err = dao.DB.Model(&model.AssMark{}).Where("student_id=? and assignment_id=?", uId, aId).Count(&count).Error
 	return

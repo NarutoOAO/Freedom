@@ -6,6 +6,7 @@ import (
 	"9900project/repository/db/model"
 	"9900project/serializar"
 	"context"
+	"fmt"
 )
 
 type CommentService struct {
@@ -37,6 +38,39 @@ func (service *CommentService) CreateComment(ctx context.Context, id uint) seria
 			Error:  err.Error(),
 		}
 	}
+	dao3 := dao2.NewPostDao(ctx)
+	dao4 := dao2.NewNotificationDao(ctx)
+	dao5 := dao2.NewCourseDao(ctx)
+	post, _ := dao3.GetPostById(service.PostId)
+	course, _ := dao5.GetCourseByCourseNumber(post.CourseNumber)
+	fmt.Println("zhejiekeshi", course.TeacherId, ", ", course.TeacherName)
+	user2, _ := dao1.GetUserById(post.AuthorId)
+	var notification *model.Notification
+	notification = &model.Notification{
+		Title:             post.Title,
+		Content:           comment.Content,
+		CourseNumber:      post.CourseNumber,
+		Status:            0,
+		PostAuthorId:      post.AuthorId,
+		PostAuthorName:    post.AuthorName,
+		PostId:            service.PostId,
+		CommentAuthorId:   comment.AuthorId,
+		CommentAuthorName: comment.AuthorName,
+		Authority:         user2.Authority,
+		CourseTeacherId:   course.TeacherId,
+		CourseTeacherName: course.TeacherName,
+	}
+	err1 := dao4.CreateNotification(notification)
+	if err1 != nil {
+		code = e.ERROR
+		return serializar.Response{
+			Status: code,
+			Msg:    "database error",
+			Error:  err.Error(),
+		}
+	}
+	var notifications []*model.Notification
+	HandleMessages(notifications, post.AuthorId)
 	return serializar.Response{
 		Status: code,
 		Msg:    "enquiry success",

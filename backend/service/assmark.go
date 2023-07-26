@@ -47,6 +47,7 @@ func (service *AssMarkService) UploadAssSolution(ctx context.Context, file multi
 		StudentId:    uId,
 		CourseNumber: assignment.CourseNumber,
 		MaxScore:     assignment.MaxScore,
+		AssName:      assignment.FileName,
 	}
 	var path string
 	path, err = util.UploadAssSolutionToLocalStatic(file, assignment.CourseNumber, user.NickName)
@@ -111,6 +112,27 @@ func (service *AssMarkService) GetAssMarks(ctx context.Context, courseNumber int
 	return serializar.Response{
 		Status: code,
 		Data:   serializar.BuildAssMarks(assMarks),
+		Msg:    "enquiry success",
+	}
+}
+
+func (service *AssMarkService) GetAssMark(ctx context.Context, courseNumber int, assignmentId uint, sId uint) serializar.Response {
+	code := e.SUCCESS
+	var err error
+	var assMark *model.AssMark
+	dao := dao2.NewAssMarkDao(ctx)
+	assMark, err = dao.GetAssMarkByCourseNumber1(courseNumber, assignmentId, sId)
+	if err != nil {
+		code = e.ERROR
+		return serializar.Response{
+			Status: code,
+			Msg:    e.GetMsg(code),
+			Error:  err.Error(),
+		}
+	}
+	return serializar.Response{
+		Status: code,
+		Data:   serializar.BuildAssMark(assMark),
 		Msg:    "enquiry success",
 	}
 }

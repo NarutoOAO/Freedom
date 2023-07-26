@@ -5,6 +5,10 @@ import (
 	util "9900project/pkg/utils"
 	"9900project/repository/db/dao"
 	"9900project/router"
+	"9900project/service"
+	"fmt"
+	"log"
+	"net/http"
 )
 
 func main() {
@@ -13,5 +17,14 @@ func main() {
 	//cache.InitCache()
 	util.InitLog()
 	r := router.NewRouter()
+	go func() {
+		service.ConnectWebSocket()
+		log.Println("Server started on http://localhost:8080")
+		err := http.ListenAndServe(":8080", nil)
+		if err != nil {
+			fmt.Println("connection failed")
+			log.Fatal("Server error: ", err)
+		}
+	}()
 	_ = r.Run(conf.HttpPort)
 }

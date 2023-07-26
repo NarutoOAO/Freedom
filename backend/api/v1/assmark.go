@@ -54,6 +54,17 @@ func ShowAssMark(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+func ShowSubmission(c *gin.Context) {
+	service := &service2.AssMarkService{}
+	courseNumber := c.Param("course_number")
+	assignmentId := c.Param("assignment_id")
+	cN, _ := strconv.Atoi(courseNumber)
+	aId, _ := strconv.Atoi(assignmentId)
+	claim, _ := util.ParseToken(c.GetHeader("Authorization"))
+	response := service.GetAssMark(c.Request.Context(), cN, uint(aId), claim.ID)
+	c.JSON(http.StatusOK, response)
+}
+
 func ShowAssMarkForStudent(c *gin.Context) {
 	service := &service2.AssMarkService{}
 	courseNumber := c.Param("course_number")

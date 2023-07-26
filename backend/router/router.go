@@ -12,6 +12,7 @@ func NewRouter() *gin.Engine {
 	r := gin.Default()
 	r.Use(middleware.Cors())
 	r.StaticFS("/static", http.Dir("./static"))
+	//r.POST("chat", api.Chat)
 	v1 := r.Group("api/v1")
 	{
 		v1.GET("ping", func(c *gin.Context) {
@@ -49,8 +50,12 @@ func NewRouter() *gin.Engine {
 			//show and enroll course
 			authed.POST("teacher-course", api.CreateCourse)
 			authed.GET("course", api.GetCoursesById)
+			authed.POST("course-number", api.GetCoursesByNumber)
 			authed.POST("student-course", api.SelectCourse)
 			authed.GET("student-course", api.GetCoursesSelectById)
+			authed.GET("student-select-course", api.StudentSelectCourse)
+			authed.DELETE("student_course/:courseNumber", api.DropCourseById)
+			authed.POST("student-course-statistics", api.Statistics)
 
 			//course material
 			authed.POST("material", api.CreateMaterial)
@@ -70,7 +75,30 @@ func NewRouter() *gin.Engine {
 			authed.DELETE("assignment_solution", api.DeleteAssMark)
 			authed.GET("assignment_solution/:course_number/:assignment_id", api.ShowAssMark)
 			authed.GET("assignment_solution/:course_number", api.ShowAssMarkForStudent)
+			authed.GET("assignment_submission/:course_number/:assignment_id", api.ShowSubmission)
 			authed.PUT("assignment_grade", api.UpdateAssMark)
+
+			//quiz
+			authed.POST("quiz", api.CreateQuiz)
+			authed.GET("quiz/:course_number", api.GetQuiz)
+			authed.POST("quiz_question", api.CreateQuizQuestion)
+			authed.GET("quiz_question/:quiz_id", api.GetQuizQuestions)
+			authed.POST("quiz_mark", api.CreateQuizMark)
+			authed.POST("get_quiz_mark", api.GetQuizMark)
+
+			//notification
+			authed.GET("notification", api.GetNotifications)
+			authed.PUT("notification/:notification_id", api.UpdatetNotification)
+
+			//tutor
+			authed.POST("tutor", api.CreateTutor)
+			authed.GET("tutor/:course_number", api.GetTutor)
+			authed.DELETE("tutor/:id", api.DeleteTutor)
+
+			//group
+			authed.POST("group", api.CreateGroup)
+			authed.GET("group/:course_number", api.GetGroup)
+			authed.DELETE("group/:id", api.DeleteGroup)
 		}
 	}
 	return r

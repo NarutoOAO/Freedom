@@ -7,6 +7,7 @@ import (
 type AssMark struct {
 	gorm.Model
 	AssignmentId uint
+	AssName      string
 	StudentId    uint
 	CourseNumber int
 	Mark         float64

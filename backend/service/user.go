@@ -17,6 +17,7 @@ type UserService struct {
 	Authority          int    `json:"authority"`
 	NewPassword        string `json:"new_password"`
 	ConfirmNewPassword string `json:"confirm_new_password"`
+	Studyoption        string `json:"studyoption"`
 }
 
 func (service *UserService) UserRegister(ctx context.Context) serializar.Response {
@@ -40,10 +41,11 @@ func (service *UserService) UserRegister(ctx context.Context) serializar.Respons
 		}
 	}
 	user = &model.User{
-		Email:     service.Email,
-		NickName:  service.Nickname,
-		Authority: service.Authority,
-		Avatar:    "avatar.JPG",
+		Email:       service.Email,
+		NickName:    service.Nickname,
+		Authority:   service.Authority,
+		Avatar:      "avatar.JPG",
+		Studyoption: service.Studyoption,
 	}
 	if service.Password == "" {
 		code = e.ERROR

@@ -55,9 +55,35 @@ func (service *PostService) CreatePost(ctx context.Context, id uint) serializar.
 			Msg:    "database failed",
 		}
 	}
+	dao5 := dao2.NewCourseDao(ctx)
+	course, _ := dao5.GetCourseByCourseNumber(post.CourseNumber)
 
+	var notification *model.Notification
+	notification = &model.Notification{
+		Title:             service.Title,
+		CourseNumber:      forum.CourseNumber,
+		Status:            0,
+		PostAuthorId:      id,
+		PostAuthorName:    user.NickName,
+		PostId:            post.ID,
+		Authority:         user.Authority,
+		CourseTeacherId:   course.TeacherId,
+		CourseTeacherName: course.TeacherName,
+	}
+	dao4 := dao2.NewNotificationDao(ctx)
+	err1 := dao4.CreateNotification(notification)
+	if err1 != nil {
+		code = e.ERROR
+		return serializar.Response{
+			Status: code,
+			Msg:    "database error",
+			Error:  err.Error(),
+		}
+	}
+
+	var notifications []*model.Notification
+	HandleMessages(notifications, course.TeacherId)
 	//err = cache.CreatePost(fmt.Sprint(post.ID), fmt.Sprint(post.AuthorId), post.Title, post.Content, fmt.Sprint(post.ForumID))
-
 	return serializar.Response{
 		Status: code,
 		Msg:    "create success",

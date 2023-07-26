@@ -14,6 +14,7 @@ type AssMark struct {
 	CourseNumber int     `json:"course_number"`
 	MaxScore     float64 `json:"max_score"`
 	Content      string  `json:"content"`
+	AssName      string  `json:"ass_name"`
 }
 
 func BuildAssMark(assMark *model.AssMark) *AssMark {
@@ -26,6 +27,7 @@ func BuildAssMark(assMark *model.AssMark) *AssMark {
 		CourseNumber: assMark.CourseNumber,
 		MaxScore:     assMark.MaxScore,
 		Content:      assMark.Content,
+		AssName:      assMark.AssName,
 	}
 }
 

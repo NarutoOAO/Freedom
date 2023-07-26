@@ -4,9 +4,9 @@ import "github.com/jinzhu/gorm"
 
 type Quiz struct {
 	gorm.Model
-	QuestionId  uint
-	Answer      string
-	Description string
-	score       float64
-	Type        uint
+	QuizName     string
+	CourseNumber int
+	MaxScore     float64
+	StartTime    LocalTime
+	EndTime      LocalTime
 }

@@ -13,6 +13,7 @@ type User struct {
 	NickName       string
 	Authority      int
 	Avatar         string `gorm:"size:1000"`
+	Studyoption    string
 }
 
 const (
