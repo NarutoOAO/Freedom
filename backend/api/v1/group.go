@@ -1,6 +1,7 @@
 package v1
 
 import (
+	util "9900project/pkg/utils"
 	service2 "9900project/service"
 	"net/http"
 	"strconv"
@@ -31,5 +32,26 @@ func DeleteGroup(c *gin.Context) {
 	id := c.Param("id")
 	tId, _ := strconv.Atoi(id)
 	response := service.DeleteGroupById(c.Request.Context(), uint(tId))
+	c.JSON(http.StatusOK, response)
+}
+
+func UpdateTutor(c *gin.Context) {
+	service := &service2.GetGroupService{}
+	id := c.Param("id")
+	tId, _ := strconv.Atoi(id)
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.UpdateGroupByTutor(c.Request.Context(), uint(tId))
+		c.JSON(http.StatusOK, res)
+	} else {
+		c.JSON(http.StatusBadRequest, gin.H{"msg": "bind parameter error"})
+	}
+}
+
+func GetGroupByUserId(c *gin.Context) {
+	service := &service2.GetGroupService{}
+	claim, _ := util.ParseToken(c.GetHeader("Authorization"))
+	courseNumber := c.Param("course_number")
+	cN, _ := strconv.Atoi(courseNumber)
+	response := service.GetGroupsByUserId(c.Request.Context(), cN, uint(claim.ID))
 	c.JSON(http.StatusOK, response)
 }

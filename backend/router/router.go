@@ -56,6 +56,7 @@ func NewRouter() *gin.Engine {
 			authed.GET("student-select-course", api.StudentSelectCourse)
 			authed.DELETE("student_course/:courseNumber", api.DropCourseById)
 			authed.POST("student-course-statistics", api.Statistics)
+			authed.GET("course/:courseNumber", api.GetTeacher)
 
 			//course material
 			authed.POST("material", api.CreateMaterial)
@@ -77,14 +78,19 @@ func NewRouter() *gin.Engine {
 			authed.GET("assignment_solution/:course_number", api.ShowAssMarkForStudent)
 			authed.GET("assignment_submission/:course_number/:assignment_id", api.ShowSubmission)
 			authed.PUT("assignment_grade", api.UpdateAssMark)
-
+			authed.PUT("assignment_solution", api.UpdateAssMarkGroup)
+			authed.GET("assignment_mark/:group_id", api.GetAssMarkByGroupId)
 			//quiz
 			authed.POST("quiz", api.CreateQuiz)
 			authed.GET("quiz/:course_number", api.GetQuiz)
 			authed.POST("quiz_question", api.CreateQuizQuestion)
 			authed.GET("quiz_question/:quiz_id", api.GetQuizQuestions)
+			authed.GET("quiz_sum/:course_number", api.GetQuizSum)
 			authed.POST("quiz_mark", api.CreateQuizMark)
 			authed.POST("get_quiz_mark", api.GetQuizMark)
+
+			//sum_score
+			authed.GET("score/:course_number", api.GetScore)
 
 			//notification
 			authed.GET("notification", api.GetNotifications)
@@ -94,11 +100,21 @@ func NewRouter() *gin.Engine {
 			authed.POST("tutor", api.CreateTutor)
 			authed.GET("tutor/:course_number", api.GetTutor)
 			authed.DELETE("tutor/:id", api.DeleteTutor)
+			authed.POST("users", api.GetUserByName)
 
 			//group
 			authed.POST("group", api.CreateGroup)
 			authed.GET("group/:course_number", api.GetGroup)
 			authed.DELETE("group/:id", api.DeleteGroup)
+			authed.PUT("group/:id", api.UpdateTutor)
+			// authed.POST("group_mark", api.CreateGroupMark)
+			// authed.GET("group_mark/:group_id", api.GetGroupMark)
+			// authed.DELETE("group_mark/:id", api.DeleteGroupMark)
+			// authed.PUT("group_mark/:id", api.UpdateGroupMark)
+			authed.GET("assignment_group/:course_number", api.GetGroupByUserId)
+
+			//recommand course based on studyoption
+			authed.POST("user_mandatory_course", api.GetMandatoryCourse)
 		}
 	}
 	return r

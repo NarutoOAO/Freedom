@@ -7,6 +7,8 @@ import (
 
 type AssMark struct {
 	Id           uint    `json:"ass_mark_id"`
+	GroupId      uint    `json:"group_id"`
+	GroupName    string  `json:"group_name"`
 	UserId       uint    `json:"user_id"`
 	AssignmentId uint    `json:"assignment_id"`
 	FileUrl      string  `json:"file_url"`
@@ -20,6 +22,8 @@ type AssMark struct {
 func BuildAssMark(assMark *model.AssMark) *AssMark {
 	return &AssMark{
 		Id:           assMark.ID,
+		GroupId:      assMark.GroupId,
+		GroupName:    assMark.GroupName,
 		UserId:       assMark.StudentId,
 		AssignmentId: assMark.AssignmentId,
 		FileUrl:      conf.PhotoHost + conf.HttpPort + conf.AssSolutionPath + assMark.FileURL(),

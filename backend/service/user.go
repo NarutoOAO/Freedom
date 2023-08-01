@@ -20,6 +20,10 @@ type UserService struct {
 	Studyoption        string `json:"studyoption"`
 }
 
+type SearchUserService struct {
+	Info string `json:"info"`
+}
+
 func (service *UserService) UserRegister(ctx context.Context) serializar.Response {
 	code := e.SUCCESS
 	var user *model.User
@@ -245,4 +249,21 @@ func (service *UserService) ChangePassword(ctx context.Context, id uint) seriali
 		},
 		Msg: "change password success",
 	}
+}
+
+func (service *UserService) GetUserByInfo(ctx context.Context, info string) serializar.Response {
+	code := e.SUCCESS
+	var users []*model.User
+	var err error
+	dao := dao2.NewUserDao(ctx)
+	users, err = dao.GetUsersByName(info)
+	if err != nil {
+		code = e.ERROR
+		return serializar.Response{
+			Status: code,
+			Msg:    "database failed",
+		}
+	}
+	count := len(users)
+	return serializar.BuildListResponse(serializar.BuildUsers(users), uint(count))
 }

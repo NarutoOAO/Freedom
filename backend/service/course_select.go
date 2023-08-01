@@ -1,12 +1,15 @@
 package service
 
 import (
+	"9900project/conf"
 	"9900project/pkg/e"
 	dao2 "9900project/repository/db/dao"
 	"9900project/repository/db/model"
 	"9900project/serializar"
 	"context"
 	"fmt"
+	"gopkg.in/mail.v2"
+	"strconv"
 )
 
 type CourseSelect struct {
@@ -21,6 +24,7 @@ func (service *CourseSelect) SelectCourse(ctx context.Context, id uint) serializ
 	var course *model.Course
 	dao := dao2.NewCourseSelectDao(ctx)
 	dao1 := dao2.NewCourseDao(ctx)
+	dao3 := dao2.NewUserDao(ctx)
 	course, err = dao1.GetCourseByCourseNumber(service.CourseNumber)
 	if course == nil {
 		code = e.ERROR
@@ -55,6 +59,23 @@ func (service *CourseSelect) SelectCourse(ctx context.Context, id uint) serializ
 			Status: code,
 			Msg:    "select course failed",
 			Error:  err.Error(),
+		}
+	}
+	user, _ := dao3.GetUserById(id)
+	cN := strconv.Itoa(service.CourseNumber)
+	mailText := "Hi," + user.NickName + ". You have enrolled class " + cN + " successfully."
+	m := mail.NewMessage()
+	m.SetHeader("From", conf.SmtpEmail)
+	m.SetHeader("To", user.Email)
+	m.SetHeader("Subject", "Freedom")
+	m.SetBody("text/html", mailText)
+	d := mail.NewDialer(conf.SmtpHost, 465, conf.SmtpEmail, conf.SmtpPass)
+	d.StartTLSPolicy = mail.MandatoryStartTLS
+	if err := d.DialAndSend(m); err != nil {
+		code = e.ErrorSendEmail
+		return serializar.Response{
+			Status: code,
+			Msg:    e.GetMsg(code),
 		}
 	}
 	return serializar.Response{
@@ -133,21 +154,31 @@ func (service *CourseSelect) StudentDropCourse(ctx context.Context, CourseNumber
 
 func (service *CourseSelect) Statistics(ctx context.Context, id uint) serializar.Response {
 	code := e.SUCCESS
+	var dataList []interface{}
+	dataList = append(dataList, service.StatisticsData(ctx, id, "ADK"))
+	dataList = append(dataList, service.StatisticsData(ctx, id, "DE"))
+	dataList = append(dataList, service.StatisticsData(ctx, id, "Core Courses"))
+	return serializar.Response{
+		Status: code,
+		Msg:    "success",
+		Data:   dataList,
+	}
+}
+
+func (service *CourseSelect) StatisticsData(ctx context.Context, id uint, Classification string) interface{} {
+	code := e.SUCCESS
 	var err error
 	var courseSelect []*model.CourseSelect
 	dao := dao2.NewCourseSelectDao(ctx)
 	dao1 := dao2.NewCourseDao(ctx)
-	//查询已选课程数量
-	fmt.Printf("", service.Classification)
-	courseSelect, err = dao.GetCourseByClassification(id, service.Classification)
-	fmt.Printf("", err)
-	fmt.Printf("", courseSelect)
-	//查询未选择课程
+
+	courseSelect, err = dao.GetCourseByClassification(id, Classification)
+
 	data := []int{}
 	for _, value := range courseSelect {
 		data = append(data, value.CourseNumber)
 	}
-	courses, err := dao1.GetByNotSelected(service.Classification, data)
+	courses, err := dao1.GetByNotSelected(Classification, data)
 	if err != nil {
 		code = e.ERROR
 		return serializar.Response{
@@ -156,15 +187,13 @@ func (service *CourseSelect) Statistics(ctx context.Context, id uint) serializar
 			Error:  err.Error(),
 		}
 	}
-	return serializar.Response{
-		Status: code,
-		Msg:    "success",
-		Data: &struct {
-			Credit  int
-			Courses []*model.Course
-		}{
-			Credit:  len(courseSelect) * 6,
-			Courses: courses,
-		},
+	return &struct {
+		Classification string
+		Credit         int
+		Courses        []*model.Course
+	}{
+		Credit:         len(courseSelect) * 6,
+		Courses:        courses,
+		Classification: Classification,
 	}
 }

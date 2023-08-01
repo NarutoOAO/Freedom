@@ -9,6 +9,7 @@ import (
 )
 
 type CreateTutorService struct {
+	UserId       uint   `json:"user_id"`
 	Email        string `json:"email"`
 	NickName     string `json:"nick_name"`
 	Authority    int    `json:"authority"`
@@ -17,6 +18,7 @@ type CreateTutorService struct {
 
 type GetTutorService struct {
 	ID           uint   `json:"id"`
+	UserId       uint   `json:"user_id"`
 	Email        string `json:"email"`
 	NickName     string `json:"nick_name"`
 	Authority    int    `json:"authority"`
@@ -27,7 +29,23 @@ func (service *CreateTutorService) CreateTutor(ctx context.Context) serializar.R
 	code := e.SUCCESS
 	var err error
 	dao := dao2.NewTutorDao(ctx)
+	_, exist, err := dao.IfExistOrNot(service.UserId, service.CourseNumber)
+	if exist {
+		code = e.ERROR
+		return serializar.Response{
+			Status: code,
+			Msg:    "Tutor is existed",
+		}
+	}
+	if err != nil {
+		code = e.ERROR
+		return serializar.Response{
+			Status: code,
+			Msg:    e.GetMsg(code),
+		}
+	}
 	tutor := &model.Tutor{
+		UserId:       service.UserId,
 		Email:        service.Email,
 		NickName:     service.NickName,
 		Authority:    service.Authority,

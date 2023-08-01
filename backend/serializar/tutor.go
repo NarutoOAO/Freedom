@@ -6,6 +6,7 @@ import (
 
 type Tutor struct {
 	ID           uint   `json:"id"`
+	UserId       uint   `json:"user_id"`
 	Email        string `json:"email"`
 	NickName     string `json:"nick_name"`
 	Authority    int    `json:"authority"`
@@ -15,6 +16,7 @@ type Tutor struct {
 func BuildTutor(tutor *model.Tutor) *Tutor {
 	return &Tutor{
 		ID:           tutor.ID,
+		UserId:       tutor.UserId,
 		Email:        tutor.Email,
 		NickName:     tutor.NickName,
 		Authority:    tutor.Authority,

@@ -34,3 +34,16 @@ func (dao *GroupDao) GetGroupById(id uint) (group *model.TutorGroup, err error) 
 	err = dao.DB.Model(&model.TutorGroup{}).Where("id=?", id).First(&group).Error
 	return
 }
+
+func (dao *GroupDao) UpdateGroupByTutor(id uint, tutor_id uint, name string) error {
+	data := map[string]interface{}{
+		"responsible_id":   tutor_id,
+		"responsible_name": name,
+	}
+	return dao.DB.Model(&model.TutorGroup{}).Where("id = ?", id).Updates(data).Error
+}
+
+func (dao *GroupDao) GetGroupsByUserId(courseNumber int, id uint) (groups []*model.TutorGroup, err error) {
+	err = dao.DB.Model(&model.TutorGroup{}).Where("course_number=? and responsible_id=?", courseNumber, id).Find(&groups).Error
+	return
+}

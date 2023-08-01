@@ -5,8 +5,9 @@ import (
 	util "9900project/pkg/utils"
 	"9900project/serializar"
 	service2 "9900project/service"
-	"github.com/gin-gonic/gin"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 func UserRegister(c *gin.Context) {
@@ -94,5 +95,16 @@ func ChangePassword(c *gin.Context) {
 			Error:  e.GetMsg(code),
 		})
 		util.LogrusObj.Info(err)
+	}
+}
+
+func GetUserByName(c *gin.Context) {
+	var service *service2.UserService
+	search := service2.SearchUserService{}
+	if err := c.ShouldBind(&search); err == nil {
+		res := service.GetUserByInfo(c.Request.Context(), search.Info)
+		c.JSON(200, res)
+	} else {
+		c.JSON(400, err)
 	}
 }

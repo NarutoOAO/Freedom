@@ -3,6 +3,7 @@ package dao
 import (
 	"9900project/repository/db/model"
 	"context"
+
 	"gorm.io/gorm"
 )
 
@@ -28,6 +29,14 @@ func (dao *UserDao) UpdateUser(id uint, user *model.User) error {
 
 func (dao *UserDao) GetUserById(id uint) (user *model.User, err error) {
 	err = dao.DB.Model(&model.User{}).Where("id=?", id).First(&user).Error
+	return
+}
+
+func (dao *UserDao) GetUsersByName(name string) (users []*model.User, err error) {
+	if name == "" {
+		return users, nil
+	}
+	err = dao.DB.Model(&model.User{}).Where("nick_name LIKE ?", "%"+name+"%").Find(&users).Error
 	return
 }
 

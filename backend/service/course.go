@@ -139,3 +139,24 @@ func (service *CourseSelect) StudentSelectCourse(ctx context.Context, id uint) s
 		Data:   scourse,
 	}
 }
+
+func (service *CourseService) GetCourse(ctx context.Context, course_number int) serializar.Response {
+	code := e.SUCCESS
+	var err error
+	var course *model.Course
+	dao := dao2.NewCourseDao(ctx)
+	course, err = dao.GetCourseByCourseNumber(course_number)
+	if err != nil {
+		code = e.ERROR
+		return serializar.Response{
+			Status: code,
+			Msg:    "enquire failed",
+			Error:  err.Error(),
+		}
+	}
+	return serializar.Response{
+		Status: code,
+		Msg:    "enquire success",
+		Data:   serializar.BuildCourseWithoutPeople(course),
+	}
+}

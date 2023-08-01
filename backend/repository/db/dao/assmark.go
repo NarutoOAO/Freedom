@@ -3,6 +3,7 @@ package dao
 import (
 	"9900project/repository/db/model"
 	"context"
+
 	"gorm.io/gorm"
 )
 
@@ -52,4 +53,9 @@ func (dao *AssMarkDao) GetAssMarkByAssId(uId uint, aId uint) (count int64, err e
 func (dao *AssMarkDao) UpdateAssMark(aId uint, assMark *model.AssMark) error {
 	err := dao.DB.Model(&model.AssMark{}).Where("id=?", aId).Updates(&assMark).Error
 	return err
+}
+
+func (dao *AssMarkDao) GetAssMarkByGroupId(id uint) (assMarks []*model.AssMark, err error) {
+	err = dao.DB.Model(&model.AssMark{}).Where("group_id=?", id).Find(&assMarks).Error
+	return
 }

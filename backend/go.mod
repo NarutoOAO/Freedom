@@ -6,10 +6,12 @@ require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-gonic/gin v1.9.0
 	github.com/go-redis/redis v6.15.9+incompatible
+	github.com/gorilla/websocket v1.5.0
 	github.com/jinzhu/gorm v1.9.16
 	github.com/sirupsen/logrus v1.9.2
 	golang.org/x/crypto v0.5.0
 	gopkg.in/ini.v1 v1.67.0
+	gopkg.in/mail.v2 v2.3.1
 	gorm.io/driver/mysql v1.5.1
 	gorm.io/gorm v1.25.1
 	gorm.io/plugin/dbresolver v1.4.1
@@ -25,7 +27,6 @@ require (
 	github.com/go-sql-driver/mysql v1.7.0 // indirect
 	github.com/goccy/go-json v0.10.0 // indirect
 	github.com/google/go-cmp v0.5.9 // indirect
-	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
@@ -45,5 +46,6 @@ require (
 	golang.org/x/sys v0.8.0 // indirect
 	golang.org/x/text v0.9.0 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
+	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

@@ -22,19 +22,10 @@ func (service *QuizMarkService) CreateQuizMark(ctx context.Context, uId uint) se
 	dao3 := dao2.NewQuizMarkDao(ctx)
 	quizQuestion, _ := dao1.GetQuizQuestionsById(service.QuizQuestionId)
 	var score float64
-	if quizQuestion.Type == 1 || quizQuestion.Type == 2 {
-		score = ScorePart(quizQuestion.Answer, service.UserAnswer) * quizQuestion.Score
-	}
+	score = ScorePart(quizQuestion.Answer, service.UserAnswer) * quizQuestion.Score
 	ans, _ := dao3.GetQuizMarkByPerson(service.QuizQuestionId, uId)
-	if ans != nil {
-		ans.UserAnswer = service.UserAnswer
-		ans.Score = score
-		dao3.UpdateQuizMark(ans.ID, ans)
-		return serializar.Response{
-			Status: code,
-			Data:   serializar.BuildQuizMark(ans),
-			Msg:    "update success",
-		}
+	if ans.ID != 0 && ans != nil {
+		_ = dao3.DeleteQuizMark(ans.ID)
 	}
 	quizMark := &model.QuizMark{
 		QuizId:          quizQuestion.QuizId,

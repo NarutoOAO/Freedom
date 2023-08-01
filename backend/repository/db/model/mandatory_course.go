@@ -4,21 +4,21 @@ import (
 	"gorm.io/gorm"
 )
 
-type Course struct {
+type MandatoryCourse struct {
 	gorm.Model
-	CourseNumber   int `gorm:"unique"`
+	CourseNumber   int
 	CourseName     string
 	TeacherId      uint
 	TeacherName    string
 	CourseImg      string
 	ClassTime      string
 	CourseLocation string
-	MaxPeople      int
 	Classification string
-	Term           int
+	MaxPeople      int
+	Term           string
 }
 
-func (course *Course) ImgURL() string {
+func (course *MandatoryCourse) ImgURL() string {
 	signedGetURL := course.CourseImg
 	return signedGetURL
 }

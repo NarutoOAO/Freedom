@@ -7,6 +7,7 @@ import (
 	service2 "9900project/service"
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -91,5 +92,22 @@ func StudentSelectCourse(c *gin.Context) {
 			Status: code,
 			Error:  e.GetMsg(code),
 		})
+	}
+}
+
+func GetTeacher(c *gin.Context) {
+	var service *service2.CourseService
+	courseNumber := c.Param("courseNumber")
+	cN, _ := strconv.Atoi(courseNumber)
+	if err := c.ShouldBindJSON(service); err != nil {
+		res := service.GetCourse(c.Request.Context(), cN)
+		c.JSON(http.StatusOK, res)
+	} else {
+		code := e.ERROR
+		c.JSON(http.StatusBadRequest, serializar.Response{
+			Status: code,
+			Error:  e.GetMsg(code),
+		})
+		util.LogrusObj.Info(err)
 	}
 }

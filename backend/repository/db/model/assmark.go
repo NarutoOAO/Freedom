@@ -14,6 +14,8 @@ type AssMark struct {
 	Content      string
 	FileUrl      string
 	MaxScore     float64
+	GroupId      uint
+	GroupName    string
 }
 
 func (assMark *AssMark) FileURL() string {

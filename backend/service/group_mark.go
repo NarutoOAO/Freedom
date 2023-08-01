@@ -8,7 +8,8 @@ import (
 	"context"
 )
 
-type CreateGroupService struct {
+type CreateGroupMarkService struct {
+	GroupId         uint   `json:"group_id"`
 	CourseNumber    int    `json:"course_number"`
 	GroupName       string `json:"group_name"`
 	TeacherId       uint   `json:"teacher_id"`
@@ -19,8 +20,9 @@ type CreateGroupService struct {
 	AssMarkId       uint   `json:"ass_mark_id"`
 }
 
-type GetGroupService struct {
+type GetGroupMarkService struct {
 	ID              uint   `json:"id"`
+	GroupId         uint   `json:"group_id"`
 	CourseNumber    int    `json:"course_number"`
 	GroupName       string `json:"group_name"`
 	TeacherId       uint   `json:"teacher_id"`
@@ -31,12 +33,13 @@ type GetGroupService struct {
 	AssMarkId       uint   `json:"ass_mark_id"`
 }
 
-func (service *CreateGroupService) CreateGroup(ctx context.Context) serializar.Response {
+func (service *CreateGroupMarkService) CreateGroup(ctx context.Context) serializar.Response {
 	code := e.SUCCESS
 	var err error
-	dao := dao2.NewGroupDao(ctx)
-	tutorGroup := &model.TutorGroup{
+	dao := dao2.NewGroupMarkDao(ctx)
+	tutorGroup := &model.GroupMark{
 		CourseNumber:    service.CourseNumber,
+		GroupId:         service.GroupId,
 		GroupName:       service.GroupName,
 		TeacherId:       service.TeacherId,
 		TeacherName:     service.TeacherName,
@@ -56,17 +59,17 @@ func (service *CreateGroupService) CreateGroup(ctx context.Context) serializar.R
 	}
 	return serializar.Response{
 		Status: code,
-		Data:   serializar.BuildGroup(tutorGroup),
+		Data:   serializar.BuildGroupMark(tutorGroup),
 		Msg:    "Add group success",
 	}
 }
 
-func (service *GetGroupService) GetGroups(ctx context.Context, courseNumber int) serializar.Response {
+func (service *GetGroupMarkService) GetGroups(ctx context.Context, id uint) serializar.Response {
 	code := e.SUCCESS
 	var err error
-	var groups []*model.TutorGroup
-	dao := dao2.NewGroupDao(ctx)
-	groups, err = dao.GetGroups(courseNumber)
+	var groups []*model.GroupMark
+	dao := dao2.NewGroupMarkDao(ctx)
+	groups, err = dao.GetGroups(id)
 	if err != nil {
 		code = e.ERROR
 		return serializar.Response{
@@ -77,15 +80,15 @@ func (service *GetGroupService) GetGroups(ctx context.Context, courseNumber int)
 	}
 	return serializar.Response{
 		Status: code,
-		Data:   serializar.BuildGroups(groups),
+		Data:   serializar.BuildGroupMarks(groups),
 		Msg:    "enquiry success",
 	}
 }
 
-func (service *GetGroupService) DeleteGroupById(ctx context.Context, id uint) serializar.Response {
+func (service *GetGroupMarkService) DeleteGroupById(ctx context.Context, id uint) serializar.Response {
 	code := e.SUCCESS
 	var err error
-	dao := dao2.NewGroupDao(ctx)
+	dao := dao2.NewGroupMarkDao(ctx)
 	group, _ := dao.GetGroupById(id)
 	if group.ResponsibleId != 0 {
 		return serializar.Response{
@@ -108,9 +111,9 @@ func (service *GetGroupService) DeleteGroupById(ctx context.Context, id uint) se
 	}
 }
 
-func (service *GetGroupService) UpdateGroupByTutor(ctx context.Context, id uint) serializar.Response {
+func (service *GetGroupMarkService) UpdateGroupById(ctx context.Context, id uint) serializar.Response {
 	code := e.SUCCESS
-	dao := dao2.NewGroupDao(ctx)
+	dao := dao2.NewGroupMarkDao(ctx)
 	_, err := dao.GetGroupById(id)
 	if err != nil {
 		return serializar.Response{
@@ -118,7 +121,7 @@ func (service *GetGroupService) UpdateGroupByTutor(ctx context.Context, id uint)
 			Msg:    "Cannot find this group!",
 		}
 	}
-	err1 := dao.UpdateGroupByTutor(id, service.ResponsibleId, service.ResponsibleName)
+	err1 := dao.UpdateGroupById(id, service.AssMarkId, service.AssignmentId)
 	if err1 != nil {
 		code = e.ERROR
 		return serializar.Response{
@@ -130,26 +133,5 @@ func (service *GetGroupService) UpdateGroupByTutor(ctx context.Context, id uint)
 	return serializar.Response{
 		Status: code,
 		Msg:    "Succeed to add tutor to group!",
-	}
-}
-
-func (service *GetGroupService) GetGroupsByUserId(ctx context.Context, courseNumber int, id uint) serializar.Response {
-	code := e.SUCCESS
-	var err error
-	var groups []*model.TutorGroup
-	dao := dao2.NewGroupDao(ctx)
-	groups, err = dao.GetGroupsByUserId(courseNumber, id)
-	if err != nil {
-		code = e.ERROR
-		return serializar.Response{
-			Status: code,
-			Msg:    e.GetMsg(code),
-			Error:  err.Error(),
-		}
-	}
-	return serializar.Response{
-		Status: code,
-		Data:   serializar.BuildGroups(groups),
-		Msg:    "enquiry success",
 	}
 }

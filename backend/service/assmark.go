@@ -16,6 +16,14 @@ type AssMarkService struct {
 	Mark         float64 `form:"mark" json:"mark"`
 	Content      string  `form:"content" json:"content"`
 	CourseNumber int     `form:"course_number" json:"course_number"`
+	GroupId      uint    `form:"group_id" json:"group_id"`
+	GroupName    string  `form:"group_name" json:"group_name"`
+}
+
+type AssMarkAllocateService struct {
+	AssMarkId uint   `json:"ass_mark_id"`
+	GroupId   uint   `json:"group_id"`
+	GroupName string `json:"group_name"`
 }
 
 func (service *AssMarkService) UploadAssSolution(ctx context.Context, file multipart.File, fileHeader int64, uId uint) serializar.Response {
@@ -186,5 +194,58 @@ func (service *AssMarkService) UpdateAssMark(ctx context.Context) serializar.Res
 		Status: code,
 		Data:   serializar.BuildAssMark(assMark),
 		Msg:    "update success",
+	}
+}
+
+func (service *AssMarkAllocateService) AllocateGroup(ctx context.Context) serializar.Response {
+	code := e.SUCCESS
+	var err error
+	dao := dao2.NewAssMarkDao(ctx)
+	assMark, err := dao.GetAssMark(service.AssMarkId)
+	if err != nil {
+		code = e.ERROR
+		return serializar.Response{
+			Status: code,
+			Msg:    e.GetMsg(code),
+			Error:  err.Error(),
+		}
+	}
+
+	assMark.GroupId = uint(service.GroupId)
+	assMark.GroupName = service.GroupName
+	err = dao.UpdateAssMark(service.AssMarkId, assMark)
+	if err != nil {
+		code = e.ERROR
+		return serializar.Response{
+			Status: code,
+			Msg:    e.GetMsg(code),
+			Error:  err.Error(),
+		}
+	}
+	return serializar.Response{
+		Status: code,
+		Data:   serializar.BuildAssMark(assMark),
+		Msg:    "Allocate success",
+	}
+}
+
+func (service *AssMarkService) GetAssMarkByGroupId(ctx context.Context, id uint) serializar.Response {
+	code := e.SUCCESS
+	var err error
+	var assMarks []*model.AssMark
+	dao := dao2.NewAssMarkDao(ctx)
+	assMarks, err = dao.GetAssMarkByGroupId(id)
+	if err != nil {
+		code = e.ERROR
+		return serializar.Response{
+			Status: code,
+			Msg:    e.GetMsg(code),
+			Error:  err.Error(),
+		}
+	}
+	return serializar.Response{
+		Status: code,
+		Data:   serializar.BuildAssMarks(assMarks),
+		Msg:    "enquiry success",
 	}
 }

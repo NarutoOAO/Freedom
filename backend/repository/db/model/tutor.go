@@ -6,6 +6,7 @@ import (
 
 type Tutor struct {
 	gorm.Model
+	UserId       uint
 	Email        string
 	NickName     string
 	Authority    int

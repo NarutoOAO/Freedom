@@ -29,3 +29,19 @@ func (dao *TutorDao) DeleteTutorById(id uint) error {
 	err := dao.DB.Where("id=?", id).Delete(&model.Tutor{}).Error
 	return err
 }
+
+func (dao *TutorDao) IfExistOrNot(id uint, couseNumber int) (tutor *model.Tutor, exist bool, err error) {
+	var count int64
+	err = dao.DB.Model(&model.Tutor{}).Where("course_number=? and user_id=?", couseNumber, id).Count(&count).Error
+	if err != nil {
+		return nil, false, err
+	}
+	if count == 0 {
+		return nil, false, nil
+	}
+	err = dao.DB.Model(&model.Tutor{}).Where("course_number=? and user_id=?", couseNumber, id).First(&tutor).Error
+	if err != nil {
+		return nil, true, err
+	}
+	return tutor, true, nil
+}

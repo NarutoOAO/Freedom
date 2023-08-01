@@ -16,6 +16,7 @@ type Course struct {
 	MaxPeople      int
 	Classification string
 	CurrentPeople  int
+	Term           int
 }
 
 func BuildCourse(course *model.Course, coursesSelect []*model.CourseSelect) *Course {
@@ -30,6 +31,20 @@ func BuildCourse(course *model.Course, coursesSelect []*model.CourseSelect) *Cou
 		Classification: course.Classification,
 		CurrentPeople:  len(coursesSelect),
 		CourseImg:      conf.PhotoHost + conf.HttpPort + conf.CourseImgPath + course.ImgURL(),
+		Term:           course.Term,
+	}
+}
+
+func BuildCourseWithoutPeople(course *model.Course) *Course {
+	return &Course{
+		CourseNumber:   course.CourseNumber,
+		CourseName:     course.CourseName,
+		TeacherId:      course.TeacherId,
+		TeacherName:    course.TeacherName,
+		ClassTime:      course.ClassTime,
+		CourseLocation: course.CourseLocation,
+		MaxPeople:      course.MaxPeople,
+		Classification: course.Classification,
 	}
 }
 

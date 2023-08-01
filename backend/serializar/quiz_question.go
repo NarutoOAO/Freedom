@@ -5,6 +5,7 @@ import (
 )
 
 type QuizQuestion struct {
+	QuizQuestionId uint    `json:"quiz_question_id"`
 	QuizId         uint    `json:"quiz_id"`
 	QuestionNumber int     `json:"question_number"`
 	Type           int     `json:"type"` //1为单选，2为多选，3为简答
@@ -19,6 +20,7 @@ type QuizQuestion struct {
 
 func BuildQuizQuestion(quizQuestion *model.QuizQuestion) *QuizQuestion {
 	return &QuizQuestion{
+		QuizQuestionId: quizQuestion.ID,
 		QuizId:         quizQuestion.QuizId,
 		QuestionNumber: quizQuestion.QuestionNumber,
 		Type:           quizQuestion.Type,
