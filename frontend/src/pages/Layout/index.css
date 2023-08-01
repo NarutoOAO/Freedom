@@ -1,0 +1,22 @@
+.layoutBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+}
+
+.button-wrapper {
+  display: flex;
+  gap: 50px;
+  margin-top: 50px;
+}
+.button_wrapper {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+.link {
+  text-decoration: none;
+  color: inherit;
+}

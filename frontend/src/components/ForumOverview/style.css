@@ -1,0 +1,7 @@
+.forumOverList{
+  position: fixed;
+  left: 10%;
+  width: 15%;
+  height: 100%;
+  border-right-style:inset;
+}

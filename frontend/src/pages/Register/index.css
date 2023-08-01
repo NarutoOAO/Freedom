@@ -1,0 +1,53 @@
+
+.account{
+  width: 400px;
+  border: 1px solid #dddddd;
+  border-radius: 5px;
+  box-shadow: 5px 5px 20px #aaa;
+
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 100px;
+  padding: 20px 40px;
+  background-color: white;
+}
+
+.account h2{
+  margin-top: 10px;
+  text-align: center;
+}
+
+.button-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-wrapper button {
+  margin: 5px 0 10px 0;
+
+}
+.linkGroup{
+  display: flex;
+  justify-content: center;
+}
+.sign{
+  border-style: none;
+  width: 100%;
+  background-color: #c09fbe;
+}
+.signLink{
+  margin-left: 10px;
+  color: blue;
+  font-family:'Segoe UI';
+  text-decoration: underline;
+}
+.job{
+  width: 319px;
+  height: 35px;
+}
+
+label{
+  margin: 5px auto;
+  font-size: larger;
+}

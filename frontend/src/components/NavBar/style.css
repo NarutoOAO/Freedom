@@ -1,0 +1,61 @@
+.nav{
+  height: 60px;
+  background-color: rgb(231, 226, 226);
+}
+.left{
+  position: absolute;
+  left: 50px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-weight: bold;
+  color: rgb(27, 168, 224);
+  font-size:xx-large;
+}
+.left:hover{
+  color: rgb(27, 168, 224);
+}
+.navBar{
+  display: flex;
+  margin: auto;
+}
+.dashboard-link{
+  margin-right: auto;
+}
+.search{
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
+.dropDown{
+  position: absolute;
+  right: 50px;
+  background-color: inherit;
+  border-style: hidden;
+  pointer-events: none;
+}
+
+.dropDown:hover{
+  background-color: inherit;
+  color: inherit;
+}
+
+.AccountCircleIcon{
+  width: 35px!important;
+  height: 35px!important;
+  color: #11D6DDFF!important;
+  margin: auto 10px;
+  pointer-events: stroke;
+}
+
+.AccountCircleIcon:active{
+  background-color: inherit;
+  color: inherit;
+}
+
+.tab-link{
+  text-decoration-line: none!important;
+  color: black!important;
+}
+
+.nickName{
+  color: black;
+}

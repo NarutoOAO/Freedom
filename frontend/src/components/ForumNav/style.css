@@ -1,0 +1,22 @@
+.navigation_teacher div{
+  margin-bottom: 5px;
+  width: 100%;
+}
+
+.navigation_teacher ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+
+.EDNavTitle{
+  text-align: center;
+  background-color: rgb(247, 198, 49);
+  padding: 5px;
+  font-weight: bold;
+}
+.NavCategory:hover{
+  cursor: pointer;
+  background-color: grey;
+}
