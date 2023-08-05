@@ -2,17 +2,19 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-
+// define a modal to modify name
 function ModalName(props) {
   const [show, setShow] = useState(false);
   const token = sessionStorage.getItem('token');
   const name = sessionStorage.getItem('name');
   const [newName,setNewName] = useState('');
+  //  handle modal close and show
   const handleClose = () => {
     setShow(false);
     setNewName('');
   }
   const handleShow = () => setShow(true);
+  // define a function to modify name
   const modify = async () => {
     const response = await fetch('http://localhost:5005/api/v1/user', {
       method: 'PUT',

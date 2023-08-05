@@ -3,6 +3,7 @@ import UserSearch from '../../components/SearchUser';
 import CreateGroup from '../../components/CreateGroup';
 import Accordion from 'react-bootstrap/Accordion';
 import TutorSearch from '../../components/SearchTutor';
+// define a page for teacher to manage tutor and group
 export default function OnlineClass(props) {
   const token = sessionStorage.getItem('token');
   const [course, setCourse] = useState('');
@@ -10,12 +11,13 @@ export default function OnlineClass(props) {
   const user_id = sessionStorage.getItem('user_id');
   const [tutors, setTutors] = useState(null);
   const [groups, setGroups] = useState(null);
+  // hook for update
   useEffect(()=>{
     getCourse();
     getTutors();
     getGroups();
   },[props.option]);
-
+// fetch course information from the server
   const getCourse = async()=>{
     const res = await fetch("http://localhost:5005/api/v1/course/"+courseNumber,{
       method: 'GET',
@@ -30,7 +32,7 @@ export default function OnlineClass(props) {
       setCourse(data.data);
     }
   }
-
+// fetch tutors information from the server
   const getTutors = async()=>{
     const res = await fetch("http://localhost:5005/api/v1/tutor/"+courseNumber,{
       method: 'GET',
@@ -45,7 +47,7 @@ export default function OnlineClass(props) {
       setTutors(data.data);
     }
   }
-
+// fetch groups information from the server
   const getGroups = async()=>{
     const res = await fetch("http://localhost:5005/api/v1/group/"+courseNumber,{
       method: 'GET',
@@ -60,7 +62,7 @@ export default function OnlineClass(props) {
       setGroups(data.data);
     }
   }
-
+// render the page
   const renderAddorTutor=(group)=>{
     if (group.responsible_name===""){
       return <span><TutorSearch courseNumber={courseNumber} id={group.id}   getGroupsFn={getGroups}/></span>

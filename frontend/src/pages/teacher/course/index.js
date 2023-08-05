@@ -7,11 +7,11 @@ import SetMaterial from '../../SetMaterial'
 import SetAssignment from '../../SetAssignment'
 import GiveMark from '../../GiveMark'
 import './style.css'
+// define the course page for teacher
 export default function TeacherCourse() {
   const [option,setOption] = React.useState('');
   const { courseNumber } = useParams();
-
-  // console.log(courseNumber);
+// hook to set the option
   React.useEffect(() => {
     document.getElementById('EnterQuiz').style.display = 'none';
     document.getElementById('OnlineClass').style.display = 'none';

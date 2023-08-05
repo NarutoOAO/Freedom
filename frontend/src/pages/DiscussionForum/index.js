@@ -4,6 +4,7 @@ import ForumNav from '../../components/ForumNav'
 import { useParams } from 'react-router-dom';
 import ForumContent from '../../components/ForumContent'
 import './style.css'
+// define the discussion forum
 export default function DiscussionForum() {
   const { courseNumber } = useParams();
   const [selectedCate,setSelectedCate] = useState('-1');

@@ -10,6 +10,7 @@ type QuizQuestionDao struct {
 	*gorm.DB
 }
 
+// NewQuizQuestionDao this file is to set the quiz question
 func NewQuizQuestionDao(ctx context.Context) *QuizQuestionDao {
 	return &QuizQuestionDao{NewDBClient(ctx)}
 }

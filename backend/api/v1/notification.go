@@ -11,6 +11,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// controller for notification
 func GetNotifications(c *gin.Context) {
 	service := &service2.NotificationService{}
 	claim, _ := util.ParseToken(c.GetHeader("Authorization"))
@@ -27,6 +28,7 @@ func GetNotifications(c *gin.Context) {
 	}
 }
 
+// controller for update notification
 func UpdatetNotification(c *gin.Context) {
 	service := &service2.UpdateNotificationService{}
 	id := c.Param("notification_id")

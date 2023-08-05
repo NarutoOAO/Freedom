@@ -1,0 +1,462 @@
+{
+	"info": {
+		"_postman_id": "bbbcfbf4-1675-4e1c-ac3b-e7528a1e2016",
+		"name": "9900project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22179173"
+	},
+	"item": [
+		{
+			"name": "用户操作",
+			"item": [
+				{
+					"name": "用户注册",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"nickname\": \"student3\", \"email\": \"33@qq.com\", \"password\": \"123456\", \"authority\": 0}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}user/register",
+							"host": [
+								"{{url}}user"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "用户登陆",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwidXNlcm5hbWUiOiIyMzcxODQ4MDcyMUBxcS5jb20iLCJhdXRob3JpdHkiOjEsImV4cCI6MTY4NTg0ODc4NSwiaXNzIjoibWFsbCJ9.-7L6NbBinULXj9WhPQgW5ooOW4lnWMrxYWtystlZqRM",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\":\"2@qq.com\", \"password\":\"123456\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}user/login",
+							"host": [
+								"{{url}}user"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "用户更新",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"nickname\":\"Yihang\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}user",
+							"host": [
+								"{{url}}user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "更换头像",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/Users/yuyihang/Library/Mobile Documents/com~apple~CloudDocs/图片/IMG_1176.JPG"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}user/avatar",
+							"host": [
+								"{{url}}user"
+							],
+							"path": [
+								"avatar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "论坛操作",
+			"item": [
+				{
+					"name": "帖子操作",
+					"item": [
+						{
+							"name": "创建帖子",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"forum_id\": 1, \"title\":\"学习日志2\", \"content\":\"今天学习了2\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}post",
+									"host": [
+										"{{url}}post"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "根据论坛id查找帖子",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"forum_id\":1}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}post",
+									"host": [
+										"{{url}}post"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "评论操作",
+					"item": [
+						{
+							"name": "增加评论",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"post_id\":1,\"content\":\"可以\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}comment",
+									"host": [
+										"{{url}}comment"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "根据帖子id查找评论",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"post_id\":1}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}comment",
+									"host": [
+										"{{url}}comment"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "创建论坛",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"forum_name\":\"quiz\", \"introduction\":\"discussion about uiz\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}forum",
+							"host": [
+								"{{url}}forum"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查询所有论坛",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}forum",
+							"host": [
+								"{{url}}forum"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "课程操作",
+			"item": [
+				{
+					"name": "老师操作",
+					"item": [
+						{
+							"name": "查询课程",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}teacher-course",
+									"host": [
+										"{{url}}teacher-course"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "创建课程",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"course_number\":9101,\"course_name\":\"Algorithm\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}teacher-course",
+									"host": [
+										"{{url}}teacher-course"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "学生操作",
+					"item": [
+						{
+							"name": "学生选课",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}student-course",
+									"host": [
+										"{{url}}student-course"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "查询课程",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}student-course",
+									"host": [
+										"{{url}}student-course"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

@@ -8,6 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// controller for group mark
 func CreateGroupMark(c *gin.Context) {
 	service := &service2.CreateGroupMarkService{}
 	if err := c.ShouldBind(&service); err == nil {
@@ -18,6 +19,7 @@ func CreateGroupMark(c *gin.Context) {
 	}
 }
 
+// controller for group mark
 func GetGroupMark(c *gin.Context) {
 	service := &service2.GetGroupMarkService{}
 	id := c.Param("group_id")
@@ -26,6 +28,7 @@ func GetGroupMark(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// controller for delete group mark
 func DeleteGroupMark(c *gin.Context) {
 	service := &service2.GetGroupMarkService{}
 	id := c.Param("id")
@@ -34,6 +37,7 @@ func DeleteGroupMark(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// controller for update group mark
 func UpdateGroupMark(c *gin.Context) {
 	service := &service2.GetGroupMarkService{}
 	id := c.Param("id")

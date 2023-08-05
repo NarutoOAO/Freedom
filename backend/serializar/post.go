@@ -2,6 +2,7 @@ package serializar
 
 import "9900project/repository/db/model"
 
+// create post
 type Post struct {
 	ID           uint   `json:"id"`
 	ForumID      uint   `json:"forum_id"`
@@ -14,6 +15,7 @@ type Post struct {
 	View         uint64 `json:"view"`
 }
 
+// build post
 func BuildPost(post *model.Post) *Post {
 	return &Post{
 		ID:           post.ID,
@@ -28,6 +30,7 @@ func BuildPost(post *model.Post) *Post {
 	}
 }
 
+// build posts
 func BuildPosts(items []*model.Post) (posts []*Post) {
 	for _, item := range items {
 		post := BuildPost(item)
@@ -36,11 +39,13 @@ func BuildPosts(items []*model.Post) (posts []*Post) {
 	return
 }
 
+// create data list
 type DataList struct {
 	Item  interface{} `json:"item"`
 	Total uint        `json:"total"`
 }
 
+// build response data list
 func BuildListResponse(items interface{}, total uint) Response {
 	return Response{
 		Status: 200,

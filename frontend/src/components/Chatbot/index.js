@@ -1,27 +1,27 @@
 import React, { useState } from 'react';
 import './Chatbot.css';
 import logo from '../../images/chatbot-icon.png';
-
+// define the chatbot
 function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [chatLog, setChatLog] = useState([]);
-
+// check the isOpen state and toggle it
   const toggleChatbot = () => {
     setIsOpen(!isOpen);
   };
-
+// handle the input change
   const handleInputChange = (event) => {
     setMessage(event.target.value);
   };
-
+//  handle the send message
   const sendMessage = () => {
     if (message.trim() === '') return;
 
-    // 添加新消息到聊天记录
+//  set the chat log
     setChatLog([...chatLog, message]);
 
-    // 清空输入框
+// clear the input
     setMessage('');
   };
 

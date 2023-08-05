@@ -4,6 +4,7 @@ import (
 	"9900project/repository/db/model"
 )
 
+// create tutor
 type Tutor struct {
 	ID           uint   `json:"id"`
 	UserId       uint   `json:"user_id"`
@@ -13,6 +14,7 @@ type Tutor struct {
 	CourseNumber int    `json:"course_number"`
 }
 
+// build tutor
 func BuildTutor(tutor *model.Tutor) *Tutor {
 	return &Tutor{
 		ID:           tutor.ID,
@@ -24,6 +26,7 @@ func BuildTutor(tutor *model.Tutor) *Tutor {
 	}
 }
 
+// build tutors
 func BuildTutors(items []*model.Tutor) (tutors []*Tutor) {
 	for _, item := range items {
 		tutor := BuildTutor(item)

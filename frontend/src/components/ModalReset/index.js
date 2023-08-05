@@ -2,23 +2,22 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-
+// define a modal to reset the password
 function ModalReset() {
   const [show, setShow] = useState(false);
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
-
+// close the modal
   const handleClose = () => {
     setShow(false);
   };
-
+// open the modal
   const handleShow = () => setShow(true);
-
+// define the function to reset the password
   const handleResetPassword = async () => {
     const apiUrl = 'http://127.0.0.1:5005/api/v1/user/password';
     const token = sessionStorage.getItem('token');
-
     const requestBody = {
       password: currentPassword,
       new_password: newPassword,

@@ -3,10 +3,12 @@ import {Link} from 'react-router-dom'
 import React from 'react'
 import WebSocketService from '../../components/WebSocketService';
 import {useWebSocket} from '../../components/WebSocketProvider'
+// define the login page
 function Login(props) {
   const [email, setEmail] = React.useState('');
   const [pwd, setPwd] = React.useState('');
   const {dispatch} = useWebSocket();
+  // define the login function
   const loginBtn = async () => {
     const response = await fetch('http://localhost:5005/api/v1/user/login', {
       method: 'POST',
@@ -31,6 +33,7 @@ function Login(props) {
       sessionStorage.setItem('name', data.data.user.nickname);
       sessionStorage.setItem('avatar', data.data.user.Avatar);
       sessionStorage.setItem('studyOption', data.data.user.studyoption);
+      // init the websocket
       WebSocketService.init(dispatch, data.data.token);
     }
   };

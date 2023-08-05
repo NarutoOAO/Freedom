@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import logo from '../../images/person-add-outline.svg'
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+// define a component to search users
 export default function UserSearch(props) {
   const [search, setSearch] = useState('');
   const [show, setShow] = useState(false);
@@ -9,9 +10,10 @@ export default function UserSearch(props) {
   const courseNumber = props.courseNumber;
   const token = sessionStorage.getItem('token');
   const [users, setUsers] = useState(null);
-
+// Open the modal
   const handleShow = async () => {
     console.log(search);
+    // get the users
     const response = await fetch('http://127.0.0.1:5005/api/v1/users', {
       method: 'POST',
       headers: {
@@ -30,14 +32,14 @@ export default function UserSearch(props) {
       setShow(true);
     }
   }
-
+// close the modal
   const handleClose = () => {
     setSearch('');
     setUsers(null);
     setShow(false);
     setSelectedUser('');
   }
-
+// define the function to select a user
   const handleSubmitUser = async () => {
     const apiUrl = 'http://localhost:5005/api/v1/tutor';
     try {
@@ -69,7 +71,7 @@ export default function UserSearch(props) {
     handleShow();
     props.getTutorsFn();
   };
-
+// define the function to select a user
   const handleUser =(user)=>{
     setSelectedUser(user);
   }

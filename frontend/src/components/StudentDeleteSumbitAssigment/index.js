@@ -4,11 +4,13 @@ import { Button } from "antd";
 import { useParams } from 'react-router-dom';
 
 function StudentDeleteSumbitAssigment(props) {
-    
+    // State to manage the visibility of the modal
     const [show, setShow] = useState(false);
+    // Get the token from session storage 
     const token = sessionStorage.getItem('token');
     const {courseNumber}=useParams();
     const [deleteAssigmentInfo,setDeleteAssigmentInfo]=useState('');
+    //flag use for refresh page
     const [flagForDelete,setFlagForDelete]=useState(false)
     // Open the modal
     const handleAsigmentDeleteShow = () => setShow(true);
@@ -16,8 +18,8 @@ function StudentDeleteSumbitAssigment(props) {
     const handleAsigmentDeleteClose = () => {
         setShow(false);
     };
+    // Function to fetch delete assignment info from the server
     const fetchDeleteAssigmentInfo = async () => {
-        console.log('http://127.0.0.1:5005/api/v1/assignment_submission/'+courseNumber+'/'+props.assignment_id)
         try {
           const response = await fetch('http://127.0.0.1:5005/api/v1/assignment_submission/'+courseNumber+'/'+props.assignment_id, {
             method: 'GET',
@@ -30,7 +32,6 @@ function StudentDeleteSumbitAssigment(props) {
           if (response.status === 200) {
             const data = await response.json();
             setDeleteAssigmentInfo(data.data);
-            console.log(data.data)
           } else {
             throw new Error('Failed to fetch assigment');
           }
@@ -38,16 +39,17 @@ function StudentDeleteSumbitAssigment(props) {
           console.error(error);
         }
       };
-      useEffect(() => {
-        if (flagForDelete) {
-          fetchDeleteAssigmentInfo();
-          setFlagForDelete(false); // Reset the flag to prevent further fetching
-        }
-         // eslint-disable-next-line
-      }, [flagForDelete]);
-    
+
+    useEffect(() => {
+      if (flagForDelete) {
+        fetchDeleteAssigmentInfo();
+        setFlagForDelete(false); 
+      }
+      // eslint-disable-next-line
+    }, [flagForDelete]);
+
+    // Function to delete the submitted assignment
     const delete_sumbit_assigment = async (props) => {
-        console.log(props)
         const requestAssignmentDelete=
         {
           ass_mark_id: parseInt(props),
@@ -72,10 +74,8 @@ function StudentDeleteSumbitAssigment(props) {
           } catch (error) {
             console.error(error);
           }
-       
     };
 
-   // ... (existing code)
 
 return (
     <div className='createAssigment'>
@@ -83,7 +83,7 @@ return (
         variant="primary"
         onClick={() => {
           handleAsigmentDeleteShow();
-          setFlagForDelete(true); // Set the flag to trigger fetching info
+          setFlagForDelete(true);
         }}
         className="assigment-function-button" 
         style={{ backgroundColor: '#eceff1' }}
@@ -97,6 +97,7 @@ return (
             <Modal.Title>Delete Previous Solution</Modal.Title>
           </Modal.Header>
           <Modal.Body className="modalBody">
+             {/* Show submit assigment*/}
             <table>
               <thead>
                 <th style={{ width: '100%' }}>The file You submit</th>
@@ -105,7 +106,6 @@ return (
                 <a href={deleteAssigmentInfo.file_url}>{deleteAssigmentInfo.file_url}</a>
               </tbody>
             </table>
-            {/* {deleteAssigmentInfo.file_url} */}
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleAsigmentDeleteClose}>
@@ -133,7 +133,6 @@ return (
         </Modal>
       )}
   
-      {/* Display alert if deleteAssigmentInfo is null */}
       
     </div>
   )

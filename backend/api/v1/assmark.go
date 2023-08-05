@@ -11,6 +11,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// controller for assignment mark
 func CreateAssMark(c *gin.Context) {
 	file, fileHeader, _ := c.Request.FormFile("file")
 	if fileHeader == nil {
@@ -35,6 +36,7 @@ func CreateAssMark(c *gin.Context) {
 	}
 }
 
+// controller for assignment mark group
 func UpdateAssMarkGroup(c *gin.Context) {
 	var service *service2.AssMarkAllocateService
 	if err := c.ShouldBind(&service); err == nil {
@@ -45,6 +47,7 @@ func UpdateAssMarkGroup(c *gin.Context) {
 	}
 }
 
+// controller for assignment mark
 func DeleteAssMark(c *gin.Context) {
 	var service *service2.AssMarkService
 	if err := c.ShouldBind(&service); err == nil {
@@ -55,6 +58,7 @@ func DeleteAssMark(c *gin.Context) {
 	}
 }
 
+// controller for show assignment mark
 func ShowAssMark(c *gin.Context) {
 	service := &service2.AssMarkService{}
 	courseNumber := c.Param("course_number")
@@ -65,6 +69,7 @@ func ShowAssMark(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// controller for show assignment submission
 func ShowSubmission(c *gin.Context) {
 	service := &service2.AssMarkService{}
 	courseNumber := c.Param("course_number")
@@ -76,6 +81,7 @@ func ShowSubmission(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// controller for show assignment mark for student
 func ShowAssMarkForStudent(c *gin.Context) {
 	service := &service2.AssMarkService{}
 	courseNumber := c.Param("course_number")
@@ -85,6 +91,7 @@ func ShowAssMarkForStudent(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// controller for update assignment mark
 func UpdateAssMark(c *gin.Context) {
 	var service *service2.AssMarkService
 	if err := c.ShouldBind(&service); err == nil {
@@ -95,6 +102,7 @@ func UpdateAssMark(c *gin.Context) {
 	}
 }
 
+// controller for get assignment mark by group id
 func GetAssMarkByGroupId(c *gin.Context) {
 	service := &service2.AssMarkService{}
 	group_id := c.Param("group_id")

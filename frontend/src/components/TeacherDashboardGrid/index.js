@@ -4,13 +4,13 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Link } from 'react-router-dom';
 import './style.css';
-
+// define the dashboard for teacher
 function TeacherDashboardGrid() {
   const [courses, setCourses] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const coursesPerPage = 6; 
   const token = sessionStorage.getItem('token');
-
+// get the courses
   useEffect(() => {
     const apiUrl = 'http://127.0.0.1:5005/api/v1/course';
     fetch(apiUrl, {
@@ -34,12 +34,12 @@ function TeacherDashboardGrid() {
         alert("Failed to fetch course data!");
       });
   }, []);
-
+// define the pagination
   const indexOfLastCourse = currentPage * coursesPerPage;
   const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
   const currentCourses = courses.slice(indexOfFirstCourse, indexOfLastCourse);
   const totalPages = Math.ceil(courses.length / coursesPerPage);
-
+// define the function to render the course
   const renderCourseRow = (course) => {
     return (
       <Col md={4} key={course.CourseNumber}>
@@ -56,11 +56,11 @@ function TeacherDashboardGrid() {
       </Col>
     );
   };
-
+// define the function to change the page
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-
+// define the function to render the pagination
   const renderPagination = () => {
     const pageNumbers = [];
     for (let i = 1; i <= totalPages; i++) {
@@ -80,7 +80,7 @@ function TeacherDashboardGrid() {
       </ul>
     );
   };
-
+// define the function to render the course
   const renderCourses = () => {
     const rows = [];
     for (let i = 0; i < currentCourses.length; i += 3) {

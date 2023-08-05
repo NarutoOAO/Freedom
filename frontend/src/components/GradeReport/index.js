@@ -4,23 +4,30 @@ import { useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+// define the grade report
 export default function GradeReport() {
-  const username = sessionStorage.getItem('name');
   const { courseNumber } = useParams();
   const [markAssigmentInfomtaion,setmMrkAssigmentInfomtaion]= useState([]);
+  // Get the token from sessionStorage
   const token = sessionStorage.getItem('token');
+  // State variable to control the visibility of the modal
   const [show, setShow] = useState(false);
+  // State variable to trigger fetching of grade information
   const [flagForGrade,setFlagForGrade]=useState(false)
   const [markQuizInfomtaion,setQuizInfomtaion]= useState([]);
+  
+  // Function to handle the display of the modal
   const handleShow = async () => {
     fetchMarkAssigmentInfomtaion();
     sumQuizMark();
     setShow(true);
   }
 
+  // Function to handle the closure of the modal
   const handleClose = () => {
     setShow(false);
   }
+
   useEffect(() => {
     if (flagForGrade) {
       fetchMarkAssigmentInfomtaion();
@@ -29,8 +36,9 @@ export default function GradeReport() {
     }
      // eslint-disable-next-line
   }, [flagForGrade]);
+
+  // Function to fetch assignment grade information from the API
   const fetchMarkAssigmentInfomtaion = async () => {
-    //console.log('http://127.0.0.1:5005/api/v1/assignment_solution/'+ courseNumber)
     try {
       const response = await fetch('http://127.0.0.1:5005/api/v1/assignment_solution/' + parseInt(courseNumber), {
         method: 'GET',
@@ -50,8 +58,9 @@ export default function GradeReport() {
       console.error(error);
     }
   };
+
+  // Function to fetch quiz grade information from the API
   const sumQuizMark = async () => {
-    //console.log('http://127.0.0.1:5005/api/v1/assignment_solution/'+ courseNumber)
     try {
       const response = await fetch('http://127.0.0.1:5005/api/v1/quiz_sum/' + parseInt(courseNumber), {
         method: 'GET',
@@ -64,7 +73,6 @@ export default function GradeReport() {
       if (response.status === 200) {
         const data = await response.json();
         setQuizInfomtaion(data.data);
-        //console.log(markAssigmentInfomtaion)
       } else {
         throw new Error('Failed to fetch assigment');
       }
@@ -101,6 +109,7 @@ export default function GradeReport() {
       <Modal.Body className='modalBody' style={{  fontFamily: 'Arial, sans-serif', fontSize: '18px', color: '#333', backgroundColor: '#f9f9f9', padding: '10px', border: '1px solid #ccc', borderRadius: '5px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',maxHeight: '500px',overflowY: 'auto', }}>
         <div className="tableContainer">
           <table>
+             {/* Table to display assignment and quiz grade information */}
             <thead>
               <tr>
                 <th style={{ width: '20%' }}>Grade item</th>
@@ -112,9 +121,10 @@ export default function GradeReport() {
               </tr>
             </thead>
             <tbody>
+              {/* Mapping through quiz grade information to display rows */}
               {markQuizInfomtaion && markQuizInfomtaion.length > 0 && (
                 markQuizInfomtaion.map((item, index) => {
-                  
+                  // Calculate the percentage and letter grade for each quiz
                   const percentage = (item.Score / item.MaxScore) * 100;
                   const letterGrade = calculateLetterGrade(percentage);
 
@@ -130,9 +140,10 @@ export default function GradeReport() {
                   );
                 })
               )}
+              {/* Mapping through assignment grade information to display rows */}
               {markAssigmentInfomtaion && markAssigmentInfomtaion.length > 0 && (
                 markAssigmentInfomtaion.map((item, index) => {
-                  
+                  // Calculate the percentage and letter grade for each assignment
                   const percentage = (item.score / item.max_score) * 100;
                   const letterGrade = calculateLetterGrade(percentage);
 
@@ -148,6 +159,7 @@ export default function GradeReport() {
                   );
                 })
               )}
+              {/* Calculate and display the total score and average percentage */}
               {(markQuizInfomtaion?.length || markAssigmentInfomtaion?.length) && (
                 <tr>
                   <td>Total Score:</td>

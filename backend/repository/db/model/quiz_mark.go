@@ -2,6 +2,7 @@ package model
 
 import "github.com/jinzhu/gorm"
 
+// QuizMark this model to create quizmark
 type QuizMark struct {
 	gorm.Model
 	QuizId          uint

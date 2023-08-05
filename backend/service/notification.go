@@ -16,6 +16,7 @@ import (
 	"github.com/gorilla/websocket"
 )
 
+// NotificationService is a struct to create notification
 type NotificationService struct {
 	Id                uint            `json:"id"`
 	Content           string          `json:"content"`
@@ -31,15 +32,18 @@ type NotificationService struct {
 	CourseNumber      int             `json:"course_number"`
 }
 
+// CreateNotificationService is a struct to update notification
 type UpdateNotificationService struct {
 	Status int `json:"status"`
 }
 
+// define a service for websocket
 type WebSocketClient struct {
 	conn  *websocket.Conn
 	token string
 }
 
+// define a map to store websocket clients
 var clients = make(map[*websocket.Conn]WebSocketClient)
 var upgrader = websocket.Upgrader{
 	CheckOrigin: func(r *http.Request) bool {
@@ -48,6 +52,7 @@ var upgrader = websocket.Upgrader{
 	Subprotocols: []string{"token"},
 }
 
+// define a function to handle websocket
 func handleWebSocket(w http.ResponseWriter, r *http.Request) {
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
@@ -65,22 +70,18 @@ func handleWebSocket(w http.ResponseWriter, r *http.Request) {
 		token: token,
 	}
 	clients[conn] = client
-	log.Println("这里这里这里")
-	log.Println(len(clients))
 
 	for {
 		_, msg, err := conn.ReadMessage()
 		if err != nil {
-			log.Println("WebSocket read error: ", err)
 			delete(clients, conn)
-			log.Println("这里这里这里,我退出了")
-			log.Println(len(clients))
 			break
 		}
 		log.Println("Received message from client: ", string(msg))
 	}
 }
 
+// define a function to connect websocket
 func ConnectWebSocket() {
 	http.HandleFunc("/ws", handleWebSocket)
 }
@@ -110,6 +111,7 @@ func HandleMessages(notifications []*model.Notification, id uint) {
 	}
 }
 
+// define a function to get notifications by id
 func (service *NotificationService) GetNotificationsById(ctx context.Context, id uint) serializar.Response {
 	code := e.SUCCESS
 	dao := dao2.NewNotificationDao(ctx)
@@ -129,6 +131,7 @@ func (service *NotificationService) GetNotificationsById(ctx context.Context, id
 	}
 }
 
+// define a function to update notification status by id
 func (service *UpdateNotificationService) UpdatetNotification(ctx context.Context, id uint, status int) serializar.Response {
 	code := e.SUCCESS
 	dao := dao2.NewNotificationDao(ctx)

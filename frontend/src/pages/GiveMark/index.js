@@ -3,16 +3,22 @@ import GradeReport from '../../components/GradeReport';
 import { Button } from "antd";
 import Accordion from 'react-bootstrap/Accordion';
 import { useEffect, useState } from 'react';
+// define the page for teacher to give marks
 export default function GiveMark(props) {
+  // Get the token from session storage 
   const token = sessionStorage.getItem('token');
   const courseNumber = props.courseNumber;
+  //Use to store group
   const [groups, setGroups] = useState(null);
+  // Get the authority from session storage 
   const authority = sessionStorage.getItem('authority');
   
   useEffect(()=>{
     getGroups();
+    // eslint-disable-next-line
   },[props.option])
 
+  // Fetch groups and their marks from the server
   const getGroups = async()=>{
     const tempGroups = [];
     const res = await fetch('http://localhost:5005/api/v1/assignment_group/'+courseNumber,{
@@ -28,7 +34,6 @@ export default function GiveMark(props) {
       if(data.data!==null){
         for(let i=0;i<data.data.length;i++){
           let group_temp = data.data[i];
-          // console.log(group_temp);
           try {
             const response = await fetch('http://127.0.0.1:5005/api/v1/assignment_mark/' + group_temp.id, {
               method: 'GET',
@@ -41,7 +46,6 @@ export default function GiveMark(props) {
             if (response.status === 200) {
               const data = await response.json();
               if(data.status===200){
-                // console.log(data);
                 group_temp['son'] = data.data;
               }else{
                 alert('Failed!')
@@ -59,18 +63,19 @@ export default function GiveMark(props) {
     setGroups(tempGroups)
   }
 
+  // Handle changes in mark input
   const handleMarkChange=(event, index,index_new)=>{
     let groups_temp = groups;
     groups_temp[index].son[index_new].score = event.target.value;
     setGroups(groups_temp);
   }
-
+  // Handle changes in content/feedback input
   const handleContentChange=(event, index,index_new)=>{
     let groups_temp = groups;
     groups_temp[index].son[index_new].content = event.target.value;
     setGroups(groups_temp);
   }
-
+  // Submit the updated mark to the server
   const submitMark=async(index,index_new)=>{
     const markValue = parseInt(groups[index].son[index_new].score);
     const max_score = groups[index].son[index_new].max_score;
@@ -107,12 +112,14 @@ export default function GiveMark(props) {
 
   return (
     <div>
-    {parseInt(authority)===0 && <div className="enroll-course-container" style={{marginLeft:'0', marginRight:'90px'}}>
-        <h2>Check yout grade</h2>
+      {/* Check grade if user is a student */}
+      {parseInt(authority)===0 && <div className="enroll-course-container" style={{marginLeft:'0', marginRight:'90px'}}>
+      <h2>Check your grade</h2>
       <GradeReport/>
       </div>}
     <div>
       <h2>Group Mark</h2>
+      {/* Display groups and their marks */}
       { groups!==null && groups!== '' &&
         groups.map((group,index)=>(
           <Accordion defaultActiveKey="0" style={{marginTop:"20px", width:'95%'}} key={index}>
@@ -138,6 +145,7 @@ export default function GiveMark(props) {
                 <th scope="col">Button</th>
               </tr>
             </thead>
+            {/* Display assignment marks */}
             {group.son !== null && group.son!=='' &&
               group.son.map((son,index_new) => (
             <tbody>

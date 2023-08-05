@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-
+// define a component to post the comment
 function PostComment(props) {
   const [show, setShow] = useState(false);
   const token = sessionStorage.getItem('token');
@@ -13,6 +13,7 @@ function PostComment(props) {
     setComment('');
   }
   const handleShow = () => setShow(true);
+  // Handle comment input change
   const newComment = async () => {
     const response = await fetch('http://127.0.0.1:5005/api/v1/comment', {
       method: 'POST',

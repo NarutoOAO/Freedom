@@ -4,6 +4,7 @@ import (
 	"9900project/repository/db/model"
 )
 
+// create group
 type TutorGroup struct {
 	ID              uint   `json:"id"`
 	CourseNumber    int    `json:"course_number"`
@@ -16,6 +17,7 @@ type TutorGroup struct {
 	AssMarkId       uint   `json:"ass_mark_id"`
 }
 
+// build group
 func BuildGroup(group *model.TutorGroup) *TutorGroup {
 	return &TutorGroup{
 		ID:              group.ID,
@@ -30,6 +32,7 @@ func BuildGroup(group *model.TutorGroup) *TutorGroup {
 	}
 }
 
+// build tutor groups
 func BuildGroups(items []*model.TutorGroup) (groups []*TutorGroup) {
 	for _, item := range items {
 		group := BuildGroup(item)

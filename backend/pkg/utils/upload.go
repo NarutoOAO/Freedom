@@ -105,7 +105,7 @@ func UploadAssSolutionToLocalStatic(file multipart.File, courseNumber int, mater
 	return cn + "/" + materialName + ".pdf", err
 }
 
-// DirExistOrNot 判断文件是否存在
+// DirExistOrNot
 func DirExistOrNot(fileAddr string) bool {
 	s, err := os.Stat(fileAddr)
 	if err != nil {
@@ -115,7 +115,7 @@ func DirExistOrNot(fileAddr string) bool {
 	return s.IsDir()
 }
 
-// CreateDir 创建文件夹
+// CreateDir
 func CreateDir(dirName string) bool {
 	err := os.MkdirAll(dirName, 0755)
 	if err != nil {

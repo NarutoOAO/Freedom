@@ -8,6 +8,7 @@ import (
 	"context"
 )
 
+// CreateTutorService is a struct to create tutor
 type CreateTutorService struct {
 	UserId       uint   `json:"user_id"`
 	Email        string `json:"email"`
@@ -16,6 +17,7 @@ type CreateTutorService struct {
 	CourseNumber int    `json:"course_number"`
 }
 
+// define a service to get tutor
 type GetTutorService struct {
 	ID           uint   `json:"id"`
 	UserId       uint   `json:"user_id"`
@@ -25,6 +27,7 @@ type GetTutorService struct {
 	CourseNumber int    `json:"course_number"`
 }
 
+// create tutor
 func (service *CreateTutorService) CreateTutor(ctx context.Context) serializar.Response {
 	code := e.SUCCESS
 	var err error
@@ -67,6 +70,7 @@ func (service *CreateTutorService) CreateTutor(ctx context.Context) serializar.R
 	}
 }
 
+// get tutors by course number
 func (service *GetTutorService) GetTutors(ctx context.Context, courseNumber int) serializar.Response {
 	code := e.SUCCESS
 	var err error
@@ -88,6 +92,7 @@ func (service *GetTutorService) GetTutors(ctx context.Context, courseNumber int)
 	}
 }
 
+// delete tutor by id
 func (service *GetTutorService) DeleteTutorById(ctx context.Context, id uint) serializar.Response {
 	code := e.SUCCESS
 	var err error

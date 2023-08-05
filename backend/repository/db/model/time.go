@@ -10,7 +10,7 @@ const TimeFormat = "2006-01-02 15:04:05"
 
 type LocalTime time.Time
 
-// bing解析
+// UnmarshalJSON bing analyse
 func (t *LocalTime) UnmarshalJSON(data []byte) (err error) {
 	if len(data) == 2 {
 		*t = LocalTime(time.Time{})
@@ -22,7 +22,7 @@ func (t *LocalTime) UnmarshalJSON(data []byte) (err error) {
 	return
 }
 
-// c.JSON 时解析值的问题
+// MarshalJSON c.JSON
 func (t LocalTime) MarshalJSON() ([]byte, error) {
 	b := make([]byte, 0, len(TimeFormat)+2)
 	b = append(b, '"')
@@ -31,7 +31,7 @@ func (t LocalTime) MarshalJSON() ([]byte, error) {
 	return b, nil
 }
 
-// 写入 mysql 时调用
+// write mysql
 func (t LocalTime) Value() (driver.Value, error) {
 	if t.String() == "0001-01-01 00:00:00" {
 		return nil, nil
@@ -39,7 +39,7 @@ func (t LocalTime) Value() (driver.Value, error) {
 	return []byte(time.Time(t).Format(TimeFormat)), nil
 }
 
-// 检出 mysql 时调用
+// check mysql 时调用
 func (t *LocalTime) Scan(v interface{}) error {
 	if value, ok := v.(time.Time); ok {
 		*t = LocalTime(value)
@@ -48,7 +48,7 @@ func (t *LocalTime) Scan(v interface{}) error {
 	return fmt.Errorf("can not convert %v to timestamp", v)
 }
 
-// 用于 fmt.Println 和后续验证场景
+// be used in fmt.Println
 func (t LocalTime) String() string {
 	return time.Time(t).Format(TimeFormat)
 }

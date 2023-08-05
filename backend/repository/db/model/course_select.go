@@ -2,6 +2,7 @@ package model
 
 import "gorm.io/gorm"
 
+// CourseSelect this model is creating CourseSelect
 type CourseSelect struct {
 	gorm.Model
 	CourseNumber int

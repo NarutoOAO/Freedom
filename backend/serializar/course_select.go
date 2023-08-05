@@ -5,6 +5,7 @@ import (
 	"9900project/repository/db/model"
 )
 
+// create course select
 type CourseSelect struct {
 	CourseNumber int
 	CourseName   string
@@ -14,6 +15,7 @@ type CourseSelect struct {
 	StudentId    uint
 }
 
+// build course select
 func BuildCourseSelect(courseSelect *model.CourseSelect) *CourseSelect {
 	return &CourseSelect{
 		CourseNumber: courseSelect.CourseNumber,
@@ -25,6 +27,7 @@ func BuildCourseSelect(courseSelect *model.CourseSelect) *CourseSelect {
 	}
 }
 
+// build courses select
 func BuildCoursesSelect(items []*model.CourseSelect) (coursesSelect []*CourseSelect) {
 	for _, item := range items {
 		courseSelect := BuildCourseSelect(item)

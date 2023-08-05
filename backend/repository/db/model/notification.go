@@ -2,6 +2,7 @@ package model
 
 import "github.com/jinzhu/gorm"
 
+// Notification this model is creating Notification
 type Notification struct {
 	gorm.Model
 	Title             string

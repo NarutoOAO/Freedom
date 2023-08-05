@@ -2,8 +2,8 @@ import './index.css'
 import Button from 'react-bootstrap/Button';
 import React from 'react';
 import {Link} from 'react-router-dom'
+// define the layout of the welcome page
 function Layout() {
-  
   return (
     <div className='layoutBody'>
       <h1>Welcome to Freedom!</h1>

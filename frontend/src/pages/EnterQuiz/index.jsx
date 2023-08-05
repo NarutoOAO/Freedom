@@ -19,6 +19,8 @@ export default function EnterQuiz() {
   const [startTimeQuiz, setStartTimeQuiz] = useState('');
   const [endTimeQuiz, setEndTimeQuiz] = useState('');
   const [flagForClean, setFlagForClean] = useState(false);
+
+  // the xxxchange functions are using for storing input values
   const handleInputTitleChange = (e) => {
     setQuizName(e.target.value);
   }
@@ -32,6 +34,7 @@ export default function EnterQuiz() {
     setEndTimeQuiz(e.target.value);
   };
   const handleClean = () => {
+    // clean all these info
     setQuizName("");
     setQuizScore("");
     setStartTimeQuiz("");

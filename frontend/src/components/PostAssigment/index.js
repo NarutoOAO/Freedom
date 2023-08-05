@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from "antd";
 import Modal from 'react-bootstrap/Modal';
-
+// define a component to post the assignment
 function PostAssigment(props) {
   const [show, setShow] = useState(false);
   const [inputAssigmentTitle, setAssigmentInputTitle] = useState("");
@@ -93,7 +93,7 @@ function PostAssigment(props) {
       >
         Create New Assigment
       </Button>
-
+      {/* Modal component to create the assignment */}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Create New Assigment</Modal.Title>
@@ -101,14 +101,17 @@ function PostAssigment(props) {
         <Modal.Body className="modalBody">
           <form encType="multipart/form-data">
             <div>
+              {/* Input field for assignment title */}
               <label htmlFor="inputTitle">Title:</label> <br />
               <input type="text" id="inputTitle" value={inputAssigmentTitle} onChange={handleInputTitleChange} style={{width:'100%', marginBottom:'10px'}}/>
             </div>
             <div>
+              {/* Input field for assignment score */}
               <label htmlFor="inputScore">Score:</label> <br />
               <input type="text" id="inputScore" value={maxScore} onChange={handleMaxScoreChange} style={{width:'100%', marginBottom:'10px'}}/>
             </div>
             <div>
+              {/*File input for uploading the assignment  */}
               <label htmlFor="fileInput">File:</label><br />
               <input type="file" id="fileInput" />
               <div style={{ color: 'gray', fontStyle: 'italic' ,marginTop:'10px'}}>Only PDF files are allowed</div>

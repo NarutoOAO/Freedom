@@ -4,6 +4,7 @@ import (
 	"gorm.io/gorm"
 )
 
+// MandatoryCourse this model for creating core courses based on study option
 type MandatoryCourse struct {
 	gorm.Model
 	CourseNumber   int

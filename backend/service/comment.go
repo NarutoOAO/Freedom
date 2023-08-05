@@ -9,11 +9,13 @@ import (
 	"fmt"
 )
 
+// CommentService is a struct to create comment
 type CommentService struct {
 	Content string `json:"content"`
 	PostId  uint   `json:"post_id"`
 }
 
+// CreateComment is a function to create comment
 func (service *CommentService) CreateComment(ctx context.Context, id uint) serializar.Response {
 	code := e.SUCCESS
 	var comment *model.Comment
@@ -78,6 +80,7 @@ func (service *CommentService) CreateComment(ctx context.Context, id uint) seria
 	}
 }
 
+// GetCommentByPostId is a function to get comment by post id
 func (service *CommentService) GetCommentByPostId(ctx context.Context, pId uint) serializar.Response {
 	code := e.SUCCESS
 	dao := dao2.NewCommentDao(ctx)

@@ -4,6 +4,7 @@ import (
 	"gorm.io/gorm"
 )
 
+// TutorGroup this model is creating TutorGroup
 type TutorGroup struct {
 	gorm.Model
 	GroupName       string

@@ -8,12 +8,14 @@ import (
 	"context"
 )
 
+// ForumService is a struct to create forum
 type ForumService struct {
 	CourseNumber int    `json:"course_number"`
 	ForumName    string `json:"forum_name"`
 	Introduction string `json:"introduction"`
 }
 
+// CreateForum is a function to create forum
 func (service *ForumService) CreateForum(ctx context.Context) serializar.Response {
 	code := e.SUCCESS
 	var err error
@@ -48,6 +50,7 @@ func (service *ForumService) CreateForum(ctx context.Context) serializar.Respons
 	}
 }
 
+// ShowForumList is a function to show forum list
 func (service *ForumService) ShowForumList(ctx context.Context, courseNumber int) serializar.Response {
 	code := e.SUCCESS
 	var err error

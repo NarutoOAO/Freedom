@@ -6,6 +6,7 @@ import (
 	"strconv"
 )
 
+// Post this model is to post on discussion forum
 type Post struct {
 	gorm.Model
 	ForumID      uint

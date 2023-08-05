@@ -8,6 +8,7 @@ import (
 	"strconv"
 )
 
+// controller for quiz sum
 func GetQuizSum(c *gin.Context) {
 	service := &service2.QuizSumService{}
 	courseNumber := c.Param("course_number")

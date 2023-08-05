@@ -2,7 +2,7 @@ import Form from 'react-bootstrap/Form'
 import './index.css'
 import {Link} from 'react-router-dom'
 import React from 'react'
-
+// define the register page
 function Register(props) {
   const [email, setEmail] = React.useState('');
   const [pwd, setPwd] = React.useState('');
@@ -10,7 +10,10 @@ function Register(props) {
   const [name, setName] = React.useState('');
   const [authority, setAuthority] = React.useState(0);
   const [studyOption, setStudyOption] = React.useState('NULL');
-
+  // regular expression for email and password
+  const emailReg = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
+  const passwordReg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{6,16}$/;
+  // handle the change of email, password, confirm password, name, authority and study option
   const handleAuthorityChange = (event) => {
     // console.log(event.target.value);
     setAuthority(parseInt(event.target.value));
@@ -20,14 +23,16 @@ function Register(props) {
     setStudyOption(event.target.value);
   };
   
-
+//define the register function
   const registerBtn = async () => {
     if (authority===0 && studyOption==="NULL"){
       alert('Student need choose its field of study')
       return
-    }
-    // console.log(authority);
-    if (pwd === cpwd) {
+    }    if(!emailReg.test(email)){
+        alert("The email is invalid!");
+    }else if(!passwordReg.test(pwd)){
+        alert("The password should include 6-16 bytes with at least 1 uppercase and 1 lowercase and 1 number!");
+    }else if (pwd === cpwd) {
       const response = await fetch('http://localhost:5005/api/v1/user/register', {
       method: 'POST',
       headers: {

@@ -30,11 +30,11 @@ func InitMySQL() {
 	}
 	db, err := gorm.Open(mysql.New(mysql.Config{
 		DSN:                       pathRead, // DSN data source name
-		DefaultStringSize:         256,      // string 类型字段的默认长度
-		DisableDatetimePrecision:  true,     // 禁用 datetime 精度，MySQL 5.6 之前的数据库不支持
-		DontSupportRenameIndex:    true,     // 重命名索引时采用删除并新建的方式，MySQL 5.7 之前的数据库和 MariaDB 不支持重命名索引
-		DontSupportRenameColumn:   true,     // 用 `change` 重命名列，MySQL 8 之前的数据库和 MariaDB 不支持重命名列
-		SkipInitializeWithVersion: false,    // 根据版本自动配置
+		DefaultStringSize:         256,      // string length
+		DisableDatetimePrecision:  true,     // not support MySQL 5.6
+		DontSupportRenameIndex:    true,
+		DontSupportRenameColumn:   true,
+		SkipInitializeWithVersion: false,
 	}), &gorm.Config{
 		Logger: ormLogger,
 		NamingStrategy: schema.NamingStrategy{
@@ -45,16 +45,16 @@ func InitMySQL() {
 		panic(err)
 	}
 	sqlDB, _ := db.DB()
-	sqlDB.SetMaxIdleConns(20)  // 设置连接池，空闲
-	sqlDB.SetMaxOpenConns(100) // 打开
+	sqlDB.SetMaxIdleConns(20)
+	sqlDB.SetMaxOpenConns(100) // open
 	sqlDB.SetConnMaxLifetime(time.Second * 30)
 	_db = db
 	_ = _db.Use(dbresolver.
 		Register(dbresolver.Config{
-			// `db2` 作为 sources，`db3`、`db4` 作为 replicas
-			Sources:  []gorm.Dialector{mysql.Open(pathRead)},                         // 写操作
-			Replicas: []gorm.Dialector{mysql.Open(pathWrite), mysql.Open(pathWrite)}, // 读操作
-			Policy:   dbresolver.RandomPolicy{},                                      // sources/replicas 负载均衡策略
+			// `db2` as sources，`db3`、`db4` as replicas
+			Sources:  []gorm.Dialector{mysql.Open(pathRead)},                         // open pathread
+			Replicas: []gorm.Dialector{mysql.Open(pathWrite), mysql.Open(pathWrite)}, // pathwrite
+			Policy:   dbresolver.RandomPolicy{},                                      // sources/replicas
 		}))
 	Migration()
 }

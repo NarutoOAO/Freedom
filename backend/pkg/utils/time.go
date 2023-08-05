@@ -8,7 +8,6 @@ import (
 	"time"
 )
 
-// MyTime 自定义时间
 type MyTime time.Time
 
 func (t *MyTime) UnmarshalJSON(data []byte) error {
@@ -16,9 +15,7 @@ func (t *MyTime) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 	var err error
-	//前端接收的时间字符串
 	str := string(data)
-	//去除接收的str收尾多余的"
 	timeStr := strings.Trim(str, "\"")
 	t1, err := time.Parse("2006-01-02 15:04:05", timeStr)
 	*t = MyTime(t1)
@@ -39,7 +36,6 @@ func (t MyTime) Value() (driver.Value, error) {
 func (t *MyTime) Scan(v interface{}) error {
 	switch vt := v.(type) {
 	case time.Time:
-		// 字符串转成 time.Time 类型
 		*t = MyTime(vt)
 	default:
 		return errors.New("类型处理错误")

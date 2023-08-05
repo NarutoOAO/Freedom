@@ -1,3 +1,4 @@
+// Desc: WebSocket service to connect to the backend
 const WebSocketService = {
   socket: null,
   init(dispatch, token) {
@@ -25,7 +26,7 @@ const WebSocketService = {
       console.log("No token found in sessionStorage. WebSocket connection skipped.");
     }
   },
-
+// Desc: Close the websocket connection
   close() {
     if (this.socket) {
       this.socket.close();

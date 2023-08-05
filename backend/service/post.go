@@ -11,6 +11,7 @@ import (
 	"strconv"
 )
 
+// PostService is a struct to create post
 type PostService struct {
 	ForumID int    `json:"forum_id"`
 	Title   string `json:"title"`
@@ -18,15 +19,18 @@ type PostService struct {
 	Status  int    `json:"status"`
 }
 
+// VoteService is a struct to vote
 type VoteData struct {
 	PostID    string  `json:"post_id"`
 	Direction float64 `json:"direction"`
 }
 
+// SearchPostService is a struct to search post
 type SearchPostService struct {
 	Info string `json:"info"`
 }
 
+// CreatePost is a function to create post
 func (service *PostService) CreatePost(ctx context.Context, id uint) serializar.Response {
 	code := e.SUCCESS
 	var post *model.Post
@@ -91,6 +95,7 @@ func (service *PostService) CreatePost(ctx context.Context, id uint) serializar.
 	}
 }
 
+// GetPostsByForumId is a function to get posts by forum id
 func (service *PostService) GetPostsByForumId(ctx context.Context, fId uint) serializar.Response {
 	code := e.SUCCESS
 	var posts []*model.Post
@@ -111,6 +116,7 @@ func (service *PostService) GetPostsByForumId(ctx context.Context, fId uint) ser
 	}
 }
 
+// GetPostsByCourseNumber is a function to get posts by course number
 func (service *PostService) GetPostsByCourseNumber(ctx context.Context, courseNumber int) serializar.Response {
 	code := e.SUCCESS
 	var posts []*model.Post
@@ -131,6 +137,7 @@ func (service *PostService) GetPostsByCourseNumber(ctx context.Context, courseNu
 	}
 }
 
+// GetPostsByUserId is a function to get information by user id
 func (service *PostService) GetPostInformationByForumId(ctx context.Context, pId uint) serializar.Response {
 	code := e.SUCCESS
 	var post *model.Post
@@ -154,6 +161,7 @@ func (service *PostService) GetPostInformationByForumId(ctx context.Context, pId
 	}
 }
 
+// GetPostsByUserId is a function to vote to post
 func (vote *VoteData) VoteToPost(ctx context.Context, userId uint) serializar.Response {
 	code := e.SUCCESS
 	err := cache.PostVote(vote.PostID, fmt.Sprint(userId), vote.Direction)
@@ -174,6 +182,7 @@ func (vote *VoteData) VoteToPost(ctx context.Context, userId uint) serializar.Re
 	}
 }
 
+// GetPostsByUserId is a function to search posts with info and course number
 func (service *PostService) SearchPosts(ctx context.Context, info string, courseNumber int) serializar.Response {
 	code := e.SUCCESS
 	var posts []*model.Post

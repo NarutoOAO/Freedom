@@ -11,6 +11,7 @@ type AssMarkDao struct {
 	*gorm.DB
 }
 
+// NewAssMarkDao get assignment mark,delete ass-mark,get mark,update mark
 func NewAssMarkDao(ctx context.Context) *AssMarkDao {
 	return &AssMarkDao{NewDBClient(ctx)}
 }
@@ -45,16 +46,19 @@ func (dao *AssMarkDao) GetAssMarkByCourseNumber1(courseNumber int, aId uint, sId
 	return
 }
 
+// GetAssMarkByAssId get assignment mark by assignment id
 func (dao *AssMarkDao) GetAssMarkByAssId(uId uint, aId uint) (count int64, err error) {
 	err = dao.DB.Model(&model.AssMark{}).Where("student_id=? and assignment_id=?", uId, aId).Count(&count).Error
 	return
 }
 
+// UpdateAssMark update assignment mark
 func (dao *AssMarkDao) UpdateAssMark(aId uint, assMark *model.AssMark) error {
 	err := dao.DB.Model(&model.AssMark{}).Where("id=?", aId).Updates(&assMark).Error
 	return err
 }
 
+// GetAssMarkByGroupId get assignment mark by group id
 func (dao *AssMarkDao) GetAssMarkByGroupId(id uint) (assMarks []*model.AssMark, err error) {
 	err = dao.DB.Model(&model.AssMark{}).Where("group_id=?", id).Find(&assMarks).Error
 	return

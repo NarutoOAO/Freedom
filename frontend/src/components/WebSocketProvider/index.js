@@ -1,12 +1,12 @@
 import React, { createContext, useContext, useReducer, useEffect } from "react";
 import WebSocketService from "../WebSocketService";
-
+// define the context for websocket
 const WebSocketContext = createContext();
-
+// define the initial state
 const initialState = {
   messages: [],
 };
-
+// define the reducer
 const reducer = (state, action) => {
   switch (action.type) {
     case "UPDATE_MESSAGES":
@@ -23,7 +23,7 @@ const reducer = (state, action) => {
       return state;
   }
 };
-
+// define the websocket provider
 export const WebSocketProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -48,7 +48,7 @@ export const WebSocketProvider = ({ children }) => {
     </WebSocketContext.Provider>
   );
 };
-
+// define the hook to use websocket
 export const useWebSocket = () => {
   return useContext(WebSocketContext);
 };

@@ -10,13 +10,14 @@ const { Title } = Typography;
 export default function ModalJoinQuiz(props) {
     const token = sessionStorage.getItem('token');
     const [showModal, setShowModal] = useState(false);
+    // singleQuiz is for storing the quiz conent
     const [singleQuiz, setSingleQuiz] = useState([]);
     // const { alert, Alert } = useAlert();
     const quiz_id = props.quiz_id;
     const [answer, setAnswer] = useState({});
 
     const handleNavigation = async () => {
-        
+        // modal box pop up
         setShowModal(true);
         try {
             const response = await fetch('http://127.0.0.1:5005/api/v1/quiz_question/' + quiz_id, {
@@ -104,10 +105,12 @@ export default function ModalJoinQuiz(props) {
                 </Modal.Header>
                 <Modal.Body>
                 <div style={{ color: 'gray', fontStyle: 'italic' ,marginTop:'10px'}}>
+                    {/* note for students */}
                     <p>For single Question, write 'A'</p>
                     <p>For multiple Question, if the answer is A and B, write 'AB'</p>
                 </div>
                 {singleQuiz && singleQuiz.map((singlequiz, index) => {
+                    // map all the singleQuiz content
                         const quizAnswerId = singlequiz.question_number;
 
                         return (

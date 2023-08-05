@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import SearchPosts from '../SearchPosts';
 import './style.css'
+// define the forum overview
 export default function ForumOverview(props) {
   const [posts, setPosts] = useState([]);
   const token = sessionStorage.getItem('token');
   const selectedCate = props.selectedCate;
   const courseNumber = props.courseNumber;
-
+//hook to fetch the posts
   useEffect(() => {
     if(selectedCate==='-1'){
       fetchPosts();
@@ -16,7 +17,7 @@ export default function ForumOverview(props) {
     }
     // eslint-disable-next-line
   },[selectedCate]);
-
+// fetch the posts
   const fetchPosts = async () => {
     try {
       const response = await fetch('http://127.0.0.1:5005/api/v1/posts/'+courseNumber, {
@@ -43,7 +44,7 @@ export default function ForumOverview(props) {
       console.error(error);
     }
   };
-
+// fetch the posts by post id
   const fetchPostsByPostId = async () => {
     try {
       const response = await fetch('http://127.0.0.1:5005/api/v1/post/'+selectedCate, {
@@ -70,7 +71,7 @@ export default function ForumOverview(props) {
       console.error(error);
     }
   };
-
+// handle the post click
   const handlePostClick = (postId) => {
     // console.log(postId);
     props.setSelectedPostFn(postId);

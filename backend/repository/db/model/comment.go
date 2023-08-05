@@ -2,6 +2,7 @@ package model
 
 import "github.com/jinzhu/gorm"
 
+// Comment this model for creating Comment
 type Comment struct {
 	gorm.Model
 	PostId     uint

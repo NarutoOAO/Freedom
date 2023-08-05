@@ -4,17 +4,19 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import './style.css'
+// define the create category component
 function CreateCategories(props) {
   const [show, setShow] = useState(false);
   const token = sessionStorage.getItem('token');
   const [category,setCategory] = useState('');
   const courseNumber = props.courseNumber;
-
+// handle close and show
   const handleClose = () => {
     setShow(false);
     setCategory('');
   }
   const handleShow = () => setShow(true);
+  // create a new category
   const createBtn = async () => {
     const response = await fetch('http://127.0.0.1:5005/api/v1/forum', {
       method: 'POST',

@@ -8,6 +8,7 @@ import (
 	"strconv"
 )
 
+// controller for score
 func GetScore(c *gin.Context) {
 	service := &service2.ScoreService{}
 	courseNumber := c.Param("course_number")

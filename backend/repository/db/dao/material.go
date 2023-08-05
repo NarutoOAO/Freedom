@@ -11,6 +11,7 @@ type MaterialDao struct {
 	*gorm.DB
 }
 
+// NewMaterialDao this file is to create course material,update material, delete material and quick search for material.
 func NewMaterialDao(ctx context.Context) *MaterialDao {
 	return &MaterialDao{NewDBClient(ctx)}
 }

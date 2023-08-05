@@ -3,13 +3,14 @@ import logo from '../../images/person-circle-outline.svg'
 import heart from '../../images/heart-outline.svg'
 import PostComment from '../PostComment'
 import './style.css'
+// define a component to show forum content
 export default function ForumContent(props) {
   const selectedPost = props.selectedPost;
   const token = sessionStorage.getItem('token');
   const [post, setPost] = useState('');
   const [contents,setContents] = useState('');
   const [flag, setFlag] = useState(0);
-
+  //implement the hook to fetch the post and contents
   useEffect(() => {
     if(selectedPost!==''){
       fetchPost();
@@ -17,7 +18,7 @@ export default function ForumContent(props) {
     }
     setFlag(0);
   },[selectedPost,flag]);
-
+  //fetch the post
   const fetchPost = async () => {
     try {
       const response = await fetch('http://127.0.0.1:5005/api/v1/post_information/'+selectedPost, {
@@ -39,7 +40,7 @@ export default function ForumContent(props) {
       console.error(error);
     }
   };
-
+  //fetch the contents
   const fetchContents = async () => {
     try {
       const response = await fetch('http://127.0.0.1:5005/api/v1/comment/'+selectedPost, {

@@ -9,6 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// controller for tutor
 func CreateTutor(c *gin.Context) {
 	service := &service2.CreateTutorService{}
 	fmt.Println(service)
@@ -20,6 +21,7 @@ func CreateTutor(c *gin.Context) {
 	}
 }
 
+// get tutor list
 func GetTutor(c *gin.Context) {
 	service := &service2.GetTutorService{}
 	courseNumber := c.Param("course_number")
@@ -28,6 +30,7 @@ func GetTutor(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// delete tutor
 func DeleteTutor(c *gin.Context) {
 	service := &service2.GetTutorService{}
 	id := c.Param("id")

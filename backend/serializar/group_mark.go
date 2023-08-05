@@ -4,6 +4,7 @@ import (
 	"9900project/repository/db/model"
 )
 
+// create group mark
 type GroupMark struct {
 	ID              uint   `json:"id"`
 	GroupId         uint   `json:"group_id"`
@@ -17,6 +18,7 @@ type GroupMark struct {
 	AssMarkId       uint   `json:"ass_mark_id"`
 }
 
+// build group
 func BuildGroupMark(group *model.GroupMark) *GroupMark {
 	return &GroupMark{
 		ID:              group.ID,
@@ -32,6 +34,7 @@ func BuildGroupMark(group *model.GroupMark) *GroupMark {
 	}
 }
 
+// build groups
 func BuildGroupMarks(items []*model.GroupMark) (groups []*GroupMark) {
 	for _, item := range items {
 		group := BuildGroupMark(item)

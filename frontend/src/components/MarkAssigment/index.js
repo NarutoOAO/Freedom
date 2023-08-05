@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Button } from "antd";
 import { useParams } from 'react-router-dom';
 import AllocateGroup from '../AllocateGroup';
-
+// define a component to mark the assignment
 function MarkAssigment(props) {
   const [show, setShow] = useState(false);
   const [mark, setMark] = useState({});
@@ -111,6 +111,7 @@ function MarkAssigment(props) {
     }
   };
 
+  // Function to render either the AllocateGroup component or group_name
   const renderAddorGroup=(ass)=>{
     if (ass.group_id===0){
       return <AllocateGroup courseNumber={courseNumber} id={ass.ass_mark_id} mark_assigmentFn={mark_assigment}/>
@@ -122,7 +123,6 @@ function MarkAssigment(props) {
   return (
     <div className='createAssigment'>
       <button className="assigment-function-button" style={{ backgroundColor: '#eceff1' }} onClick={() => mark_assigment(props)}>Mark</button>
-
       <Modal size='xl' show={show} onHide={handleAsigmentUploaClose}>
         <Modal.Header closeButton>
           <Modal.Title>Mark Assigment</Modal.Title>
@@ -151,9 +151,9 @@ function MarkAssigment(props) {
               {assigmentInfroamtion !== null &&
                 assigmentInfroamtion.map((assigmentInfroamtion) => {
                   const assMarkId = assigmentInfroamtion.ass_mark_id;
-
                   return (
                     <tr key={assMarkId}>
+                      {/* Map through assignment information and display them in a table */}
                       <td>{assigmentInfroamtion.file_url.substring(assigmentInfroamtion.file_url.lastIndexOf("/") + 1, assigmentInfroamtion.file_url.lastIndexOf("."))}</td>
                       <td>
                         <a href={assigmentInfroamtion.file_url} target="_blank" rel="noopener noreferrer">

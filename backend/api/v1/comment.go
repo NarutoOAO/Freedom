@@ -9,6 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// controller for comment
 func CreateComment(c *gin.Context) {
 	var service *service2.CommentService
 	claim, _ := util.ParseToken(c.GetHeader("Authorization"))
@@ -20,6 +21,7 @@ func CreateComment(c *gin.Context) {
 	}
 }
 
+// controller for gettting comment by post id
 func GetCommentByPostId(c *gin.Context) {
 	var service *service2.CommentService
 	//id := c.Request.Header.Get("listingid")

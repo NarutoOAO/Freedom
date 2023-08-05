@@ -7,6 +7,7 @@ import (
 	"net/http"
 )
 
+// get core courses
 func GetMandatoryCourse(c *gin.Context) {
 	var service *service2.MandatoryCourseService
 	claim, _ := util.ParseToken(c.GetHeader("Authorization"))

@@ -4,6 +4,7 @@ import (
 	"gorm.io/gorm"
 )
 
+// GroupMark this model is creating GroupMark
 type GroupMark struct {
 	gorm.Model
 	GroupId         uint

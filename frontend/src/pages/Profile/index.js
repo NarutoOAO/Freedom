@@ -3,6 +3,7 @@ import './style.css'
 import ModalReset from '../../components/ModalReset'
 import ModalName from '../../components/ModalName'
 import ModalAvatar from '../../components/ModalAvatar';
+// define the profile page
 export default function Profile() {
   const [name, setName] = useState(sessionStorage.getItem('name'));
   const email = sessionStorage.getItem('owner');

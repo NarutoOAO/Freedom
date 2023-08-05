@@ -4,6 +4,7 @@ import (
 	"gorm.io/gorm"
 )
 
+// Course this model is creating Course
 type Course struct {
 	gorm.Model
 	CourseNumber   int `gorm:"unique"`

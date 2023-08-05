@@ -9,6 +9,7 @@ import {Link} from 'react-router-dom'
 import OffCanvasExample from '../Notification';
 import './style.css'
 import WebSocketService from '../WebSocketService';
+// define the navigation bar
 function NavScrollExample(props) {
   const authority = parseInt(sessionStorage.getItem('authority'));
   function logout() {

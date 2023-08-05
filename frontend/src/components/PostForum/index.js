@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-
+// define a modal to post the forum
 function PostForum(props) {
   const [show, setShow] = useState(false);
   const token = sessionStorage.getItem('token');
@@ -10,13 +10,16 @@ function PostForum(props) {
   const [content,setContent] = useState('');
   const categories = props.categories;
   const [category, setCategory] = useState(1);
+  // close the modal
   const handleClose = () => {
     setShow(false);
     setCategory(1);
     setContent('');
     setTitle('');
   }
+  // open the modal
   const handleShow = () => setShow(true);
+  // define the function to post the forum
   const createBtn = async () => {
     const response = await fetch('http://127.0.0.1:5005/api/v1/post', {
       method: 'POST',

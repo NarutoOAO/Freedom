@@ -27,12 +27,8 @@ export default function QuizCreate() {
     startTimeQuiz,
     endTimeQuiz
     }]);
-//收集quiz的表单信息
-  
-  
-  //question:quizInfo.questions[questionIndex];传给QuizEdit界面的只有一道题
-  //questionInfo可以通过api的形式获取
-  //get接口
+//Collect quiz form information
+  // store some info in question
   const [question, setQuestion] = useState(
     {quesionNumber:'', answerType: '', description: '', score: '', answers: '',choiceA:'',choiceB:'',choiceC:'',choiceD:'' }
   );

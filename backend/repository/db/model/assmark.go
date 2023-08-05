@@ -4,6 +4,7 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
+// AssMark this model for AssMark
 type AssMark struct {
 	gorm.Model
 	AssignmentId uint

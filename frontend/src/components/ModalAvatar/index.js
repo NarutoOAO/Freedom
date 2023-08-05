@@ -2,12 +2,12 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import './style.css';
-
+// define the modal for avatar
 function ModalAvatar(props) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
+// upload the avatar
   function uploadFile() {
     const fileInput = document.getElementById('fileInput');
     const file = fileInput.files[0];

@@ -13,6 +13,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// controller for post
 func CreatePost(c *gin.Context) {
 	var service *service2.PostService
 	claim, _ := util.ParseToken(c.GetHeader("Authorization"))
@@ -29,6 +30,7 @@ func CreatePost(c *gin.Context) {
 	}
 }
 
+// get posts by forum id
 func GetPostByForumId(c *gin.Context) {
 	var service *service2.PostService
 	//id := c.Request.Header.Get("listingid")
@@ -38,6 +40,7 @@ func GetPostByForumId(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// get posts by course number
 func GetPostByCourseNumber(c *gin.Context) {
 	var service *service2.PostService
 	//id := c.Request.Header.Get("listingid")
@@ -47,6 +50,7 @@ func GetPostByCourseNumber(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// get post information by forum id
 func GetPostInformationByForumId(c *gin.Context) {
 	var service *service2.PostService
 	//id := c.Request.Header.Get("listingid")
@@ -91,6 +95,7 @@ func PostVote(c *gin.Context) {
 	}
 }
 
+// search post by info
 func SearchPostByInfo(c *gin.Context) {
 	var service *service2.PostService
 	courseNumber := c.Param("course")

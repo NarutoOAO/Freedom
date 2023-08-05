@@ -11,6 +11,7 @@ type UserDao struct {
 	*gorm.DB
 }
 
+// NewUserDao this file is to create users and update the users.
 func NewUserDao(ctx context.Context) *UserDao {
 	return &UserDao{NewDBClient(ctx)}
 }

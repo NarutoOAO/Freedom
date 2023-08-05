@@ -8,6 +8,7 @@ import (
 	"context"
 )
 
+// CreateGroupService is a struct to create group
 type CreateGroupService struct {
 	CourseNumber    int    `json:"course_number"`
 	GroupName       string `json:"group_name"`
@@ -19,6 +20,7 @@ type CreateGroupService struct {
 	AssMarkId       uint   `json:"ass_mark_id"`
 }
 
+// define a service to get group
 type GetGroupService struct {
 	ID              uint   `json:"id"`
 	CourseNumber    int    `json:"course_number"`
@@ -31,6 +33,7 @@ type GetGroupService struct {
 	AssMarkId       uint   `json:"ass_mark_id"`
 }
 
+// create group
 func (service *CreateGroupService) CreateGroup(ctx context.Context) serializar.Response {
 	code := e.SUCCESS
 	var err error
@@ -61,6 +64,7 @@ func (service *CreateGroupService) CreateGroup(ctx context.Context) serializar.R
 	}
 }
 
+// get groups
 func (service *GetGroupService) GetGroups(ctx context.Context, courseNumber int) serializar.Response {
 	code := e.SUCCESS
 	var err error
@@ -82,6 +86,7 @@ func (service *GetGroupService) GetGroups(ctx context.Context, courseNumber int)
 	}
 }
 
+// delete group by id
 func (service *GetGroupService) DeleteGroupById(ctx context.Context, id uint) serializar.Response {
 	code := e.SUCCESS
 	var err error
@@ -108,6 +113,7 @@ func (service *GetGroupService) DeleteGroupById(ctx context.Context, id uint) se
 	}
 }
 
+// update group by tutor
 func (service *GetGroupService) UpdateGroupByTutor(ctx context.Context, id uint) serializar.Response {
 	code := e.SUCCESS
 	dao := dao2.NewGroupDao(ctx)
@@ -133,6 +139,7 @@ func (service *GetGroupService) UpdateGroupByTutor(ctx context.Context, id uint)
 	}
 }
 
+// get groups by user id
 func (service *GetGroupService) GetGroupsByUserId(ctx context.Context, courseNumber int, id uint) serializar.Response {
 	code := e.SUCCESS
 	var err error

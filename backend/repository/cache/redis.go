@@ -6,7 +6,6 @@ import (
 	"strconv"
 )
 
-// RedisClient Redis缓存客户端单例
 var RedisClient *redis.Client
 
 func InitCache() {

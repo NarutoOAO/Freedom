@@ -10,6 +10,7 @@ type QuizSumDao struct {
 	*gorm.DB
 }
 
+// NewQuizSumDao this file is to get sum of quiz mark.
 func NewQuizSumDao(ctx context.Context) *QuizSumDao {
 	return &QuizSumDao{NewDBClient(ctx)}
 }

@@ -69,6 +69,7 @@ export default function EnterQuizStudent(props) {
       {quizInfo && quizInfo.length > 0 ? (
         <Card className="quiz-info-card" >
           <List >
+            {/* using map to iterate all information of the quiz such as quiz name, score and so on */}
             {quizInfo.map((quiz, index) => (
               <React.Fragment key={index}>
                 <List.Item>Quiz Name: {quiz.quiz_name}</List.Item>

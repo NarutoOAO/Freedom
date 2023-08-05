@@ -10,6 +10,7 @@ type QuizDao struct {
 	*gorm.DB
 }
 
+// NewQuizDao this file is to create quiz in different courses.
 func NewQuizDao(ctx context.Context) *QuizDao {
 	return &QuizDao{NewDBClient(ctx)}
 }

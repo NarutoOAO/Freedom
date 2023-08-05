@@ -10,6 +10,7 @@ type ScoreDao struct {
 	*gorm.DB
 }
 
+// NewScoreDao this file is to view score
 func NewScoreDao(ctx context.Context) *ScoreDao {
 	return &ScoreDao{NewDBClient(ctx)}
 }

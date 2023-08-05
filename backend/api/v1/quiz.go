@@ -8,6 +8,7 @@ import (
 	"strconv"
 )
 
+// controller for quiz
 func CreateQuiz(c *gin.Context) {
 	claim, _ := util.ParseToken(c.GetHeader("Authorization"))
 	if claim.Authority != 1 {

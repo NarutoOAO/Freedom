@@ -10,6 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// controller for user
 func UserRegister(c *gin.Context) {
 	var service service2.UserService
 	if err := c.ShouldBind(&service); err == nil {

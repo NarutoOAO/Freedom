@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
 import './style.css'
+// define the create course page
 function CreateCourse() {
+   // State variables to manage form inputs and class times
   const [courseNumber, setCourseNumber] = useState('');
   const [courseName, setCourseName] = useState('');
-  const token = sessionStorage.getItem('token');
   const [maxEnrollPeople,setMaxEnrollPeople]= useState('');
   const [courseLocation,setCourseLocation]= useState('');
   const [classification,setClassification]= useState('');
   const [classtime, setClasstime] = useState([{ day: '', time: '' }]);
-
+  // Get the token from session storage 
+  const token = sessionStorage.getItem('token');
+  // Function to add a new class time
   const addClassTime = () => {
     setClasstime([...classtime, { day: '', time: '' }]);
   };
-
+  // Function to remove a class time
   const removeClassTime = (index) => {
     if (classtime.length > 1) {
       const updatedClasstime = [...classtime];
@@ -20,13 +23,9 @@ function CreateCourse() {
       setClasstime(updatedClasstime);
     }
   };
-  
-
   const handleCreateCourse = async () => {
-    console.log(classtime)
     // Check empty for class times
     const hasEmptyDayOrTime = classtime.some((time) => !time.day || !time.time);
-
     if (hasEmptyDayOrTime) {
       alert('Every day and time in Class Time must be selected.');
       return;
@@ -54,23 +53,18 @@ function CreateCourse() {
       if (dayA !== dayB) {
         return dayA - dayB;
       }
-  
       // Days are same, compare times
       const timeOrder = ['8:00 - 10:00', '10:00 - 12:00','12:00 - 14:00','16:00 - 18:00','18:00 - 20:00'];
       const timeA = timeOrder.indexOf(a.time);
       const timeB = timeOrder.indexOf(b.time);
       return timeA - timeB;
     });
-   
-   
     const classTimeString = sortedClasstime.map((time) => `${time.day}: ${time.time}`).join('\n');
-    console.log(sortedClasstime)
-    console.log(typeof(sortedClasstime))
     if (parseInt(courseNumber) === 0 || isNaN(parseInt(courseNumber))) {
       alert('Please enter a valid course number');
       return;
     }
-
+    // Check empty or invalid values for course information
     if (!courseLocation) {
       alert('Course Location cannot be empty.');
       return;
@@ -85,6 +79,8 @@ function CreateCourse() {
       alert('Max Enroll People should be a valid integer greater than or equal to 1.');
       return;
     }
+
+    // API request to create a new course
     const response = await fetch('http://127.0.0.1:5005/api/v1/teacher-course', {
       method: 'POST',
       headers: {
@@ -104,7 +100,6 @@ function CreateCourse() {
     if (data.status !== 200) {
       alert(data.msg);
     } else {
-      // console.log(data);
       alert("Succeed!");
     }
     setCourseName('');
@@ -193,6 +188,7 @@ function CreateCourse() {
                 <option value='Friday'>Friday</option>
               </select>
             </label>
+            {/* Map class time entries */}
             <label>
               Class Time:
               <select
@@ -212,6 +208,7 @@ function CreateCourse() {
                 <option value='18:00 - 20:00'>18:00 - 20:00</option>
               </select>
             </label>
+            {/* Remove Class Time button */}
             {index > 0 && (
               <button type='button' style={{marginLeft:'10px',marginTop:'10px'}} onClick={() => removeClassTime(index)}>
                 Remove
@@ -220,12 +217,14 @@ function CreateCourse() {
           </div>
         ))}
 
-      
+        {/* Add Class Time button */}
         <div style={{marginBottom:'10px',marginTop:'10px'}}>
           <button type='button' onClick={addClassTime}>
             Add Class Time
           </button>
         </div>
+
+        {/* Create Course button */}
         <button type="button" onClick={handleCreateCourse}>
           Create
         </button>

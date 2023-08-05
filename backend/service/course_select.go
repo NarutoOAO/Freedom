@@ -8,10 +8,12 @@ import (
 	"9900project/serializar"
 	"context"
 	"fmt"
-	"gopkg.in/mail.v2"
 	"strconv"
+
+	"gopkg.in/mail.v2"
 )
 
+// CourseSelect is a struct to select course
 type CourseSelect struct {
 	CourseNumber   int    `json:"course_number"`
 	Classification string `json:"classification"`
@@ -106,6 +108,7 @@ func (service *CourseSelect) GetCoursesSelectById(ctx context.Context, id uint) 
 	}
 }
 
+// show courses
 func (service *CourseSelect) GetCoursesByNumber(ctx context.Context) interface{} {
 	code := e.SUCCESS
 	var err error
@@ -133,6 +136,7 @@ func (service *CourseSelect) GetCoursesByNumber(ctx context.Context) interface{}
 	}
 }
 
+// drop course
 func (service *CourseSelect) StudentDropCourse(ctx context.Context, CourseNumber int, id uint) serializar.Response {
 	code := e.SUCCESS
 	var err error

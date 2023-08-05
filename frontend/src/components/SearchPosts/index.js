@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import logo from '../../images/search-outline.svg'
 import Modal from 'react-bootstrap/Modal';
-
+// define a component to search posts
 export default function PostSearch(props) {
   const [search, setSearch] = useState('');
   const [show, setShow] = useState(false);
@@ -9,9 +9,10 @@ export default function PostSearch(props) {
   const courseNumber = props.courseNumber;
   const token = sessionStorage.getItem('token');
   const [posts, setPosts] = useState(null);
-
+// Open the modal
   const handleShow = async () => {
     console.log(courseNumber);
+    // get the posts
     const response = await fetch('http://127.0.0.1:5005/api/v1/post_search/'+courseNumber, {
       method: 'POST',
       headers: {
@@ -30,13 +31,13 @@ export default function PostSearch(props) {
       setShow(true);
     }
   }
-
+// close the modal
   const handleClose = () => {
     setSearch('');
     setPosts(null);
     setShow(false);
   }
-
+// define the function to select a post
   const selectPost = (id) => {
     props.handlePostClickFn(id);
     handleClose();

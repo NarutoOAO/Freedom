@@ -12,11 +12,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// controller for course module
 func CreateCourse(c *gin.Context) {
 	var service *service2.CourseService
 	claim, _ := util.ParseToken(c.GetHeader("Authorization"))
 	if claim.Authority != 1 {
-		c.JSON(http.StatusBadRequest, gin.H{"msg": "权限不足"})
+		c.JSON(http.StatusBadRequest, gin.H{"msg": "you dont have enough authorization"})
 		return
 	}
 	err := c.ShouldBindJSON(&service)
@@ -25,7 +26,7 @@ func CreateCourse(c *gin.Context) {
 		c.JSON(http.StatusOK, res)
 	} else {
 		fmt.Printf("", err)
-		c.JSON(http.StatusBadRequest, gin.H{"msg": "参数绑定错误"})
+		c.JSON(http.StatusBadRequest, gin.H{"msg": "bind parameters error"})
 	}
 }
 

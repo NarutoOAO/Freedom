@@ -3,9 +3,13 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import './style.css'
 export default function CoreCourseModel() {
+  // State to manage the visibility of the modal
   const [show, setShow] = useState(false);
+  // Get the token from sessionStorage
   const token = sessionStorage.getItem('token');
+  // Use to get core course inforamtion
   const [corecourses, setCoreCourses] = useState(null);
+  // Function to handle showing the modal and fetch core course infroamtion from server
   const handleShow = async () => {
     setShow(true);
     const response = await fetch('http://127.0.0.1:5005/api/v1/user_mandatory_course', {
@@ -22,13 +26,12 @@ export default function CoreCourseModel() {
     }
   }
 
+  // Function to handle closing the modal
   const handleClose = () => {
     setShow(false);
   }
 
  
-
-  
   return (
     <>
       <button onClick={handleShow}>Look</button>
@@ -49,6 +52,7 @@ export default function CoreCourseModel() {
               </tr>
             </thead>
             <tbody>
+              {/* Map through core course information and display them in a table */}
               {corecourses !== null && corecourses !== '' && corecourses !== undefined &&
                 corecourses.map((courseItem,index) => (
                   <tr>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-
+// define a component to create a new group
 function CreateGroup(props) {
   const [show, setShow] = useState(false);
   const token = sessionStorage.getItem('token');
@@ -10,11 +10,13 @@ function CreateGroup(props) {
   const name = sessionStorage.getItem('name');
   const user_id = sessionStorage.getItem('user_id');
   const [group, setGroup] = useState('');
+  // handle close and show
   const handleClose = () => {
     setShow(false);
     setGroup('');
   }
   const handleShow = () => setShow(true);
+  // create a new group
   const modify = async () => {
     const response = await fetch('http://localhost:5005/api/v1/group', {
       method: 'POST',

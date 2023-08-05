@@ -1,9 +1,8 @@
 import React from 'react'
 import TeacherDashboardGrid from '../../../components/TeacherDashboardGrid'
-export default function Dashboard2(props) {
-
+// define the dashboard page for teacher
+export default function Dashboard2() {
   return (
-    
     <div>
       <TeacherDashboardGrid/>
     </div>

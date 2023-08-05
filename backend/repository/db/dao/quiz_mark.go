@@ -11,6 +11,7 @@ type QuizMarkDao struct {
 	*gorm.DB
 }
 
+// NewQuizMarkDao this file is to mark quiz.
 func NewQuizMarkDao(ctx context.Context) *QuizMarkDao {
 	return &QuizMarkDao{NewDBClient(ctx)}
 }

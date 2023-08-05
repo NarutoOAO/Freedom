@@ -3,26 +3,29 @@ package v1
 import (
 	util "9900project/pkg/utils"
 	service2 "9900project/service"
-	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
+
+	"github.com/gin-gonic/gin"
 )
 
+// controller for forum
 func CreateForum(c *gin.Context) {
 	var service *service2.ForumService
 	claim, _ := util.ParseToken(c.GetHeader("Authorization"))
 	if claim.Authority != 1 {
-		c.JSON(http.StatusBadRequest, gin.H{"msg": "权限不足"})
+		c.JSON(http.StatusBadRequest, gin.H{"msg": "you dont have enough authorization"})
 		return
 	}
 	if err := c.ShouldBind(&service); err == nil {
 		res := service.CreateForum(c.Request.Context())
 		c.JSON(http.StatusOK, res)
 	} else {
-		c.JSON(http.StatusBadRequest, gin.H{"msg": "参数绑定错误"})
+		c.JSON(http.StatusBadRequest, gin.H{"msg": "bind parameters error"})
 	}
 }
 
+// controller for forum list
 func ShowForumList(c *gin.Context) {
 	var service *service2.ForumService
 	courseNumber := c.Param("course_number")

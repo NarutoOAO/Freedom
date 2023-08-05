@@ -6,7 +6,7 @@ import CreateCategories from '../../components/CreateCategories';
 import { useParams } from 'react-router-dom';
 import PostForum from '../PostForum';
 import './style.css';
-
+// define the forum navigation bar
 export default function ForumNav(props) {
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
@@ -14,17 +14,17 @@ export default function ForumNav(props) {
   const { courseNumber } = useParams();
   const [flag, setFlag] = useState(0);
   const authority=sessionStorage.getItem('authority');
-
+  //hook to fetch the categories
   useEffect(() => {
     fetchCategories();
     setFlag(0);
     // eslint-disable-next-line
   },[courseNumber,flag]);
-
+  // go back to the course page
   const goBack = () => {
     navigate(-1);
   };
-
+  // fetch the categories
   const fetchCategories = async () => {
     const response = await fetch(`http://127.0.0.1:5005/api/v1/forum/${courseNumber}`, {
       method: 'GET',
@@ -40,7 +40,7 @@ export default function ForumNav(props) {
       setCategories(data.data);
     }
   };
-
+  // handle the category click
   const handleCategoryClick = (categoryId) => {
     props.setSelectedCateFn(categoryId);
   };

@@ -1,6 +1,7 @@
 import React from 'react';
 import './style.css';
 import {Link} from 'react-router-dom'
+// define the navigation bar for teacher
 function TeacherNavBar(props) {
   const chooseMenu = (option) => {
     props.setOptionFn(option);

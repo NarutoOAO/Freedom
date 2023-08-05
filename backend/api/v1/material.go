@@ -11,6 +11,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// controller for material
 func CreateMaterial(c *gin.Context) {
 	file, fileHeader, _ := c.Request.FormFile("file")
 	if fileHeader == nil {
@@ -23,7 +24,7 @@ func CreateMaterial(c *gin.Context) {
 	fileSize := fileHeader.Size
 	claim, _ := util.ParseToken(c.GetHeader("Authorization"))
 	if claim.Authority != 1 {
-		c.JSON(http.StatusBadRequest, gin.H{"msg": "权限不足"})
+		c.JSON(http.StatusBadRequest, gin.H{"msg": "you dont have enough authorization"})
 		return
 	}
 	var service *service2.MaterialService
@@ -48,7 +49,7 @@ func ShowMaterial(c *gin.Context) {
 func UpdateMaterial(c *gin.Context) {
 	claim, _ := util.ParseToken(c.GetHeader("Authorization"))
 	if claim.Authority != 1 {
-		c.JSON(http.StatusBadRequest, gin.H{"msg": "权限不足"})
+		c.JSON(http.StatusBadRequest, gin.H{"msg": "you dont have enough authorization"})
 		return
 	}
 	var service *service2.MaterialService
@@ -63,7 +64,7 @@ func UpdateMaterial(c *gin.Context) {
 func DeleteMaterial(c *gin.Context) {
 	claim, _ := util.ParseToken(c.GetHeader("Authorization"))
 	if claim.Authority != 1 {
-		c.JSON(http.StatusBadRequest, gin.H{"msg": "权限不足"})
+		c.JSON(http.StatusBadRequest, gin.H{"msg": "you dont have enough authorization"})
 		return
 	}
 	var service *service2.MaterialService

@@ -2,12 +2,15 @@ import React, { useState } from 'react'
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import logo from '../../images/add-circle-outline.svg';
+//define the modal to allocate the group
 export default function AllocateGroup(props) {
   const [show, setShow] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState('');
   const courseNumber = props.courseNumber;
   const token = sessionStorage.getItem('token');
   const [groups, setGroups] = useState(null);
+
+  //define the function to get the group list
   const handleShow = async () => {
     setShow(true);
     const res = await fetch("http://localhost:5005/api/v1/group/"+courseNumber,{
@@ -24,13 +27,13 @@ export default function AllocateGroup(props) {
       setGroups(data.data);
     }
   }
-
+  //define the function to close the modal
   const handleClose = () => {
     setGroups(null);
     setShow(false);
     setSelectedGroup('');
   }
-
+  //define the function to submit the group
   const handleSubmit = async () => {
     const apiUrl = 'http://localhost:5005/api/v1/assignment_solution';
     try {
@@ -60,7 +63,6 @@ export default function AllocateGroup(props) {
     handleClose();
     props.mark_assigmentFn();
   };
-
   const handleGroup =(group)=>{
     setSelectedGroup(group);
   }
@@ -75,7 +77,7 @@ export default function AllocateGroup(props) {
           <Modal.Title>Group List</Modal.Title>
         </Modal.Header>
         <Modal.Body className='modalBody' style={{ maxHeight: '500px', overflowY: 'auto' }}>
-        <table className="table table-hover">
+            <table className="table table-hover">
               <colgroup>
                 <col style={{ width: '10%' }} />
                 <col style={{ width: '20%' }} />

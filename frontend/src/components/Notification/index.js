@@ -2,12 +2,14 @@ import { useState } from 'react';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import logo from '../../images/notifications.svg'
 import Toast from 'react-bootstrap/Toast';
+// define a component to show off canvas
 function OffCanvasExample({ name, ...props }) {
   const [show, setShow] = useState(false);
   const [notifications, setNotifications] = useState('');
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const token = sessionStorage.getItem('token');
+  // define a function to get notifications
   const getNotifications = async() =>{
     handleShow();
     const res = await fetch('http://127.0.0.1:5005/api/v1/notification', {
@@ -26,6 +28,7 @@ function OffCanvasExample({ name, ...props }) {
       }
     }
   }
+  // define a function to render the status
   const renderStatus =(status)=>{
     if (status) {
       return (<strong className="me-auto" style={{color:'green'}}>Read</strong>)
@@ -34,7 +37,7 @@ function OffCanvasExample({ name, ...props }) {
     }
   }
 
-
+// define a function to render the notification type
   const renderNoteType = (notification)=>{
     if (notification.comment_author_name!==""){
       return <Toast.Body><span style={{color:'red'}}>{notification.comment_author_name}</span> commented your post <span style={{color:'red'}}>{notification.title}</span></Toast.Body>
@@ -42,13 +45,13 @@ function OffCanvasExample({ name, ...props }) {
       return <Toast.Body><span style={{color:'red'}}>{notification.post_author_name}</span> made a post <span style={{color:'red'}}>{notification.title}</span> on your course<span style={{color:'red'}}> {notification.course_number}</span></Toast.Body>
     }
   }
-
+// define a function to handle the click status
   const handleClickStatus = (status, id) => {
     if (status === 0) {
       updateStatus(id);
     }
   }
-
+// define a function to update the status
   const updateStatus = async(id)=>{
     const res = await fetch('http://127.0.0.1:5005/api/v1/notification/'+id, {
       method: 'PUT',

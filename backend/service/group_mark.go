@@ -8,6 +8,7 @@ import (
 	"context"
 )
 
+// CreateGroupMarkService is a struct to create group mark
 type CreateGroupMarkService struct {
 	GroupId         uint   `json:"group_id"`
 	CourseNumber    int    `json:"course_number"`
@@ -20,6 +21,7 @@ type CreateGroupMarkService struct {
 	AssMarkId       uint   `json:"ass_mark_id"`
 }
 
+// define a service to get group mark
 type GetGroupMarkService struct {
 	ID              uint   `json:"id"`
 	GroupId         uint   `json:"group_id"`
@@ -33,6 +35,7 @@ type GetGroupMarkService struct {
 	AssMarkId       uint   `json:"ass_mark_id"`
 }
 
+// create group
 func (service *CreateGroupMarkService) CreateGroup(ctx context.Context) serializar.Response {
 	code := e.SUCCESS
 	var err error
@@ -64,6 +67,7 @@ func (service *CreateGroupMarkService) CreateGroup(ctx context.Context) serializ
 	}
 }
 
+// get groups
 func (service *GetGroupMarkService) GetGroups(ctx context.Context, id uint) serializar.Response {
 	code := e.SUCCESS
 	var err error
@@ -85,6 +89,7 @@ func (service *GetGroupMarkService) GetGroups(ctx context.Context, id uint) seri
 	}
 }
 
+// delete group by id
 func (service *GetGroupMarkService) DeleteGroupById(ctx context.Context, id uint) serializar.Response {
 	code := e.SUCCESS
 	var err error
@@ -111,6 +116,7 @@ func (service *GetGroupMarkService) DeleteGroupById(ctx context.Context, id uint
 	}
 }
 
+// update group by id
 func (service *GetGroupMarkService) UpdateGroupById(ctx context.Context, id uint) serializar.Response {
 	code := e.SUCCESS
 	dao := dao2.NewGroupMarkDao(ctx)

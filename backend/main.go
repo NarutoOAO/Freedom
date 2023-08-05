@@ -17,6 +17,7 @@ func main() {
 	//cache.InitCache()
 	util.InitLog()
 	r := router.NewRouter()
+	// define a go routine to start websocket
 	go func() {
 		service.ConnectWebSocket()
 		log.Println("Server started on http://localhost:8080")

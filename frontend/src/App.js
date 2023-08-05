@@ -21,7 +21,7 @@ function App() {
   const [token, setToken] = useState(sessionStorage.getItem('token'));
   const navigate = useNavigate();
   const { pathname } = useLocation();
-
+  // hook to check the token
   useEffect(() => {
     if (token !== null && token !== 'null' && (pathname === '/login' || pathname === '/register')) {
       document.body.style.background='white';
@@ -34,7 +34,7 @@ function App() {
       }
     }
   }, [token, navigate, pathname]);
-
+  //render routers
   return (
     <div className="App">
       {pathname!=='/' &&(<NavScrollExample setTokenFn={setToken}/>)}

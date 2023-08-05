@@ -11,7 +11,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// 选课
+// controller for course select
 func SelectCourse(c *gin.Context) {
 	var service *service2.CourseSelect
 	claim, _ := util.ParseToken(c.GetHeader("Authorization"))
@@ -23,11 +23,11 @@ func SelectCourse(c *gin.Context) {
 		res := service.SelectCourse(c.Request.Context(), claim.ID)
 		c.JSON(http.StatusOK, res)
 	} else {
-		c.JSON(http.StatusBadRequest, gin.H{"msg": "参数绑定错误"})
+		c.JSON(http.StatusBadRequest, gin.H{"msg": "bind parameters error"})
 	}
 }
 
-// 查看已经选择的课程
+// controller for course select
 func GetCoursesSelectById(c *gin.Context) {
 	var service *service2.CourseSelect
 	claim, _ := util.ParseToken(c.GetHeader("Authorization"))
@@ -48,6 +48,7 @@ func GetCoursesSelectById(c *gin.Context) {
 	}
 }
 
+// define the controller for course drop
 func DropCourseById(c *gin.Context) {
 	claim, _ := util.ParseToken(c.GetHeader("Authorization"))
 	if claim.Authority != 0 {
@@ -70,7 +71,6 @@ func DropCourseById(c *gin.Context) {
 	}
 }
 
-// 学生选课统计
 func Statistics(c *gin.Context) {
 	var service *service2.CourseSelect
 	claim, _ := util.ParseToken(c.GetHeader("Authorization"))

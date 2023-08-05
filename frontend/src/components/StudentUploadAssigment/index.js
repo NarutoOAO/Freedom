@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Button } from "antd";
 
 function StudentUploadAssigment(props) {
-    
+    // State to manage the visibility of the modal
     const [show, setShow] = useState(false);
     // Open the modal
     const handleAsigmentUploadShow = () => setShow(true);
@@ -11,6 +11,7 @@ function StudentUploadAssigment(props) {
     const handleAsigmentUploaClose = () => {
         setShow(false);
     };
+    // Function to handle student solution upload
     function handleStudentSolutionUpload(props) {
         const fileInput = document.getElementById('fileInput');
         const file = fileInput.files[0];
@@ -21,7 +22,6 @@ function StudentUploadAssigment(props) {
           alert('Missed submission deadline.');
           return;
         }
-        
         studentSumbitSolution.append('assignment_id', parseInt(props.assignment_id));
         studentSumbitSolution.append('file', file);
         // Validate file
@@ -29,13 +29,11 @@ function StudentUploadAssigment(props) {
           alert('Please submit a file');
           return;
         }
-    
         // Validate file type
         if (file.type !== 'application/pdf') {
           alert('Only PDF files are allowed.');
           return;
         }
-       
         // Send the assignment solution to the server
         fetch('http://127.0.0.1:5005/api/v1/assignment_solution', {
           method: 'POST',
@@ -58,6 +56,7 @@ function StudentUploadAssigment(props) {
           });
           
       }
+      
 
     return (
             <div className='createAssigment'>
@@ -69,7 +68,7 @@ function StudentUploadAssigment(props) {
               >
                 Upload Solution
               </button>
-              
+              {/* Modal component for student upload assigment solution*/}
               <Modal show={show} onHide={handleAsigmentUploaClose}>
                 <Modal.Header closeButton>
                   <Modal.Title>Upload Solution</Modal.Title>
@@ -81,7 +80,6 @@ function StudentUploadAssigment(props) {
                       <input type="file" id="fileInput" />
                       <div style={{ color: 'gray', fontStyle: 'italic' ,marginTop:'10px'}}>Only PDF files are allowed</div>
                     </div>
-                    
                   </form>
                 </Modal.Body>
                 <Modal.Footer>
@@ -89,13 +87,11 @@ function StudentUploadAssigment(props) {
                       Close
                   </Button>
                   <Button variant="primary" onClick={() => handleStudentSolutionUpload(props)}>
-                        Upload
+                      Upload
                   </Button>
                 </Modal.Footer>
               </Modal>
             </div>
-       
     )
-
 }
 export default StudentUploadAssigment;

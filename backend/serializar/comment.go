@@ -2,6 +2,7 @@ package serializar
 
 import "9900project/repository/db/model"
 
+// create comment
 type Comment struct {
 	ID         uint   `json:"id"`
 	Content    string `json:"content"`
@@ -10,6 +11,7 @@ type Comment struct {
 	Authority  int    `json:"authorization"`
 }
 
+// build comment
 func BuildComment(comment *model.Comment) *Comment {
 	return &Comment{
 		ID:         comment.ID,
@@ -20,6 +22,7 @@ func BuildComment(comment *model.Comment) *Comment {
 	}
 }
 
+// build comments
 func BuildComments(items []*model.Comment) (comments []*Comment) {
 	for _, item := range items {
 		comment := BuildComment(item)

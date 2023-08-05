@@ -9,6 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// controller for group
 func CreateGroup(c *gin.Context) {
 	service := &service2.CreateGroupService{}
 	if err := c.ShouldBind(&service); err == nil {
@@ -19,6 +20,7 @@ func CreateGroup(c *gin.Context) {
 	}
 }
 
+// get group list
 func GetGroup(c *gin.Context) {
 	service := &service2.GetGroupService{}
 	courseNumber := c.Param("course_number")
@@ -27,6 +29,7 @@ func GetGroup(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// delete group
 func DeleteGroup(c *gin.Context) {
 	service := &service2.GetGroupService{}
 	id := c.Param("id")
@@ -35,6 +38,7 @@ func DeleteGroup(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// update group info by id
 func UpdateTutor(c *gin.Context) {
 	service := &service2.GetGroupService{}
 	id := c.Param("id")
@@ -47,6 +51,7 @@ func UpdateTutor(c *gin.Context) {
 	}
 }
 
+// get group info by id
 func GetGroupByUserId(c *gin.Context) {
 	service := &service2.GetGroupService{}
 	claim, _ := util.ParseToken(c.GetHeader("Authorization"))

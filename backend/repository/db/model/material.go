@@ -2,6 +2,7 @@ package model
 
 import "github.com/jinzhu/gorm"
 
+// Material this model to creating Material
 type Material struct {
 	gorm.Model
 	CourseNumber int

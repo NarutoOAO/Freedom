@@ -5,7 +5,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-// User 用户模型
+// User model
 type User struct {
 	gorm.Model
 	Email          string `gorm:"unique"`
@@ -17,8 +17,8 @@ type User struct {
 }
 
 const (
-	PassWordCost        = 12       //密码加密难度
-	Active       string = "active" //激活用户
+	PassWordCost        = 12       //password
+	Active       string = "active" //active users
 )
 
 // SetPassword 设置密码
@@ -31,13 +31,13 @@ func (user *User) SetPassword(password string) error {
 	return nil
 }
 
-// CheckPassword 校验密码
+// CheckPassword check your password
 func (user *User) CheckPassword(password string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(user.PasswordDigest), []byte(password))
 	return err == nil
 }
 
-// AvatarUrl 头像地址
+// AvatarUrl set avatar
 func (user *User) AvatarURL() string {
 	signedGetURL := user.Avatar
 	return signedGetURL

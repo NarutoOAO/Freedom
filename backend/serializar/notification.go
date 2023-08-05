@@ -2,6 +2,7 @@ package serializar
 
 import "9900project/repository/db/model"
 
+// create notification
 type Notification struct {
 	Id                uint            `json:"id"`
 	Content           string          `json:"content"`
@@ -17,6 +18,7 @@ type Notification struct {
 	CourseNumber      int             `json:"course_number"`
 }
 
+// build notification
 func BuildNotification(notification *model.Notification) *Notification {
 	return &Notification{
 		Id:                notification.ID,
@@ -34,6 +36,7 @@ func BuildNotification(notification *model.Notification) *Notification {
 	}
 }
 
+// build notifications
 func BuildNotifications(items []*model.Notification) (notifications []*Notification) {
 	for _, item := range items {
 		notification := BuildNotification(item)

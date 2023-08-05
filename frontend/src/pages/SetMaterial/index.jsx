@@ -3,12 +3,13 @@ import ModalMaterial from '../../components/ModalMaterial';
 import "./setMaterial.css";
 import PostMaterial from '../../components/Material';
 import SearchMaterial from '../../components/SearchMaterial';
-
 import { useParams } from 'react-router-dom';
 
 export default function SetMaterial () {
+  // Get the authority from session storage 
   const authority=sessionStorage.getItem('authority');
   const { courseNumber } = useParams();
+  // eslint-disable-next-line
   const[weekInfo,setWeekInfo]=useState([
     {
       id:1,
@@ -64,21 +65,17 @@ export default function SetMaterial () {
       <div className="input-Mcontainer">
         <SearchMaterial courseNumber={courseNumber} />
       </div>
-      {/* <div className="input-Mcontainer">
-        <input type="text" name="inf" placeholder="Enter your search information" />
-        <button >Search</button>
-      </div> */}
+      {/* As teachers, they can post material*/}
       {authority !== '0' && (
       <div className="postMaterial-container">
             <PostMaterial courseNumber={courseNumber} />
       </div>
       )}
+      {/*See material inforamtion*/}
       <div className="weekInfo-container">
       {
         weekInfo.map((item)=>{
          return(<ModalMaterial key={item.id} modelName={item.name} courseNumber={courseNumber}/>)
-         
-          
         })
       }
       </div>

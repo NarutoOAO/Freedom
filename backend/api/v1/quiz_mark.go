@@ -7,6 +7,7 @@ import (
 	"net/http"
 )
 
+// controller for quiz mark
 func CreateQuizMark(c *gin.Context) {
 	claim, _ := util.ParseToken(c.GetHeader("Authorization"))
 	var service *service2.QuizMarkService

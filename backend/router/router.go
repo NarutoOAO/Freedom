@@ -107,10 +107,6 @@ func NewRouter() *gin.Engine {
 			authed.GET("group/:course_number", api.GetGroup)
 			authed.DELETE("group/:id", api.DeleteGroup)
 			authed.PUT("group/:id", api.UpdateTutor)
-			// authed.POST("group_mark", api.CreateGroupMark)
-			// authed.GET("group_mark/:group_id", api.GetGroupMark)
-			// authed.DELETE("group_mark/:id", api.DeleteGroupMark)
-			// authed.PUT("group_mark/:id", api.UpdateGroupMark)
 			authed.GET("assignment_group/:course_number", api.GetGroupByUserId)
 
 			//recommand course based on studyoption

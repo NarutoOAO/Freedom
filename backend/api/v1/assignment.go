@@ -10,6 +10,7 @@ import (
 	"strconv"
 )
 
+// CreateAssignment controller for create assignment
 func CreateAssignment(c *gin.Context) {
 	file, fileHeader, _ := c.Request.FormFile("file")
 	if fileHeader == nil {
@@ -34,6 +35,7 @@ func CreateAssignment(c *gin.Context) {
 	}
 }
 
+// UpdateAssignment controller for update assignment
 func UpdateAssignment(c *gin.Context) {
 	claim, _ := util.ParseToken(c.GetHeader("Authorization"))
 	if claim.Authority != 1 {
@@ -49,6 +51,7 @@ func UpdateAssignment(c *gin.Context) {
 	}
 }
 
+// ShowAssignment controller for show assignment
 func ShowAssignment(c *gin.Context) {
 	service := &service2.AssignmentService{}
 	courseNumber := c.Param("course_number")
@@ -57,6 +60,7 @@ func ShowAssignment(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// DeleteAssignment controller for delete assignment
 func DeleteAssignment(c *gin.Context) {
 	var service *service2.AssignmentService
 	if err := c.ShouldBind(&service); err == nil {

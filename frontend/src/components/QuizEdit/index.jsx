@@ -10,7 +10,7 @@ function QuizEdit(props) {
   const [question, setQuestion] = useState(
     { questionId: '', answerType: '', description: '', score: '',  question_number:'' }
   );
-  // const [question_number, setQuestion_number] = useState('');
+  // all the choice ABCD are string types.
   const [choiceA, setChoiceA] = useState('');
   const [choiceB, setChoiceB] = useState('');
   const [choiceC, setChoiceC] = useState('');
@@ -18,7 +18,7 @@ function QuizEdit(props) {
   //const { alert, Alert } = useAlert();
   const [quizId,setQuizId]= useState('');
   const [showModal, setShowModal] = useState(false);
-
+// set the time year, month, day, hour, minute, second
   const formatDateTime = (dateTime) => {
     const date = new Date(dateTime);
     const year = date.getFullYear();
